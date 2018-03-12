@@ -1,0 +1,3 @@
+--finish odijks, oprims
+--write map, deque, etc. on sharelatex
+--clean up pagerank

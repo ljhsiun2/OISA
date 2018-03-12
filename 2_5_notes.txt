@@ -1,0 +1,10 @@
+raccoon
+zero trace
+predicate stack
+trace
+--si-disasm
+--x86-disasm
+ORAM_INIT(size)
+ORAM_access(write/read, arr+index, 5/&var) == arr[i] = 5
+cmov(cond, src, dst) <--> if(cond) dst = src;
+OSORT

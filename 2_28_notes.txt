@@ -1,0 +1,27 @@
+Sections 1-3: Motvations, introduction, talk about attacks and stuf
+
+4: What makes this different than other ISAs
+	behavior can only be dependent on public operands
+	talking about base isa + instrs
+	benefits of this isa (e.g. mixing pub and priv stuff)
+	
+5: Provide a couple cisc instructions 
+	
+
+6: benchmarks + evaluation (e.g. queue stuff  
+
+
+TODO:
+	PQ, heap, djikstra's+prim's pseudocode, clean up pagerank
+	bernstein's code exploration
+	find max, matrix multiply
+
+prims/dijkstras
+	|
+	PQ
+	|
+	HEAP
+	|
+	ORAM
+	|
+	SORT

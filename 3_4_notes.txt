@@ -1,0 +1,11 @@
+rewrite algos to not require the cache 
+does ods.start need to be worried about? wb ods.finalize?
+correct access_oram
+user ocload and ocstore (maybe?)
+cannot progress in heap/map/other ODS bc ods.access/ods.start/ods.finalize are kinda hard
+
+
+PageRank
+Binary Search
+Matrix Multiplication
+DNN or Kmeans
