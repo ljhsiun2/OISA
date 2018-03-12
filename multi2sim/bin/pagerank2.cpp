@@ -41,7 +41,7 @@ int Fa(data v_data){
 
 /* This is specialized for "out"? */
 void Scatter(Graph & G){
-	//OSORT(G);
+	BitonicSort_i(G);
 	data tempVal;
 	for(int i = 0; i<M; i++)
 	{
@@ -54,7 +54,7 @@ void Scatter(Graph & G){
 
 /* This is specialized for "in"? */
 void Gather(Graph & G){
-	//OSORT(G);
+	BitonicSort_i(G); 
 	int agg = 1;
 	for(int i =0; i<M; i++)
 	{

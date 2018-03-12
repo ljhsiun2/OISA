@@ -221,7 +221,7 @@ compileProgram()
             # executeProgram(str(N) + " " + str(B) + " " + str(C))
             # calcCommitTime()
 # TODO: put the arguments here
-executeProgram("5 8 10")
+executeProgram("")
 calcCommitTime()
 
 
