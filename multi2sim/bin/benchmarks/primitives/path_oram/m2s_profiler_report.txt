@@ -1,0 +1,27 @@
+=== Generate files ===
+=== Calculate commit time ===
+{'8048a40': ['enter', 'PushBack'], '8048b2e': ['leave', 'PushBack'], '804a070': ['enter', 'BitonicSubSort.part.0'], '8048d15': ['leave', 'Init_ORAM_Controller'], '8048b43': ['leave', 'PushBack'], '8048e9f': ['leave', 'Init_ORAM'], '8048580': ['leave', 'main'], '8048d30': ['enter', 'Init_ORAM_Tree'], '804a1e0': ['enter', 'BitonicSort_i'], '804a250': ['enter', 'BitonicSort_T'], '80497e0': ['enter', 'Print_Stash'], '8048dbd': ['leave', 'Init_ORAM_Tree'], '8048a20': ['enter', 'GenRandLeaf'], '804a1c9': ['leave', 'BitonicSubSort.part.0'], '8049fe9': ['leave', 'BitonicMerge'], '8049738': ['leave', 'Access_ORAM'], '8048ea0': ['enter', 'Retrieve_LeafLabel'], '8049810': ['enter', 'BitonicMerge'], '8048bb0': ['enter', 'Init_PosMap'], '8049365': ['leave', 'Fetch_Blocks'], '80497c0': ['enter', 'Print_All'], '8048dc0': ['enter', 'Init_ORAM'], '80497b0': ['enter', 'Print_Func_Time_Stats'], '8048a34': ['leave', 'GenRandLeaf'], '80497f0': ['enter', 'Print_PosMap'], '80497d0': ['enter', 'Print_ORAM'], '8049380': ['enter', 'Store_Blocks'], '8048c10': ['enter', 'Init_ORAM_Controller'], '804a2bd': ['leave', 'BitonicSort_T'], '8049080': ['enter', 'Fetch_Blocks'], '8048560': ['enter', 'main'], '8048ba3': ['leave', 'Init_Stash'], '8048b50': ['enter', 'Init_Stash'], '8048f91': ['leave', 'Retrieve_LeafLabel'], '8048c02': ['leave', 'Init_PosMap'], '80496a0': ['enter', 'Access_ORAM'], '804967f': ['leave', 'Store_Blocks'], '804a24c': ['leave', 'BitonicSort_i']}
+{'BitonicSubSort.part.0': 1406195, 'Fetch_Blocks': 2030848, 'Retrieve_LeafLabel': 1064902, 'BitonicSort_i': 0, 'main': 334451, 'Print_All': 0, 'BitonicSort_T': 23031, 'GenRandLeaf': 0, 'Store_Blocks': 444035, 'Init_ORAM': 77685, 'Access_ORAM': 134532, 'before_main': 611567, 'Print_PosMap': 0, 'Init_Stash': 0, 'Print_ORAM': 0, 'Init_ORAM_Tree': 0, 'Print_Stash': 0, 'BitonicMerge': 1393863, 'PushBack': 413176, 'Init_PosMap': 0, 'Print_Func_Time_Stats': 0, 'Init_ORAM_Controller': 300689}
+
+where main happens:  611156
+where all end:  8259643
+
+before_main : 7.426459391371484 %
+main : 4.061348584707129 %
+
+    Init_ORAM : 0.9433545266809586 %
+        Init_ORAM_Tree : 0.0 %
+        Init_ORAM_Controller : 3.6513655052219955 %
+            Init_Stash : 0.0 %
+            Init_PosMap : 0.0 %
+    Access_ORAM : 1.633666360088083 %
+        GenRandLeaf : 0.0 %
+        Retrieve_LeafLabel : 12.931455521292479 %
+        Fetch_Blocks : 24.66125576109894 %
+        Store_Blocks : 5.392063168626883 %
+            PushBack : 5.017332173726353 %
+            BitonicSort_T : 0.2796730141467356 %
+            BitonicMerge : 16.926137228848567 %
+            BitonicSubSort : 17.075888764190392 %
+
+

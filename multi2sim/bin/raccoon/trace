@@ -1,0 +1,1409 @@
+x86.init version="1.671" num_cores=1 num_threads=1
+mem.init version="1.678"
+mem.new_net name="x86-net-l1-l2" num_nodes=3
+mem.new_net name="x86-net-l2-mm" num_nodes=3
+mem.new_mod name="x86-l1-0" num_sets=16 assoc=2 block_size=64 sub_block_size=64 num_sharers=1 level=1 high_net="" high_net_node=0 low_net="x86-net-l1-l2" low_net_node=0
+mem.new_mod name="x86-l2" num_sets=64 assoc=4 block_size=64 sub_block_size=64 num_sharers=3 level=2 high_net="x86-net-l1-l2" high_net_node=1 low_net="x86-net-l2-mm" low_net_node=0
+mem.new_mod name="x86-mm" num_sets=8192 assoc=16 block_size=64 sub_block_size=64 num_sharers=3 level=3 high_net="x86-net-l2-mm" high_net_node=1 low_net="" low_net_node=0
+c clk=1
+x86.map_ctx ctx=1000 core=0 thread=0 ppid=0
+x86.new_inst id=1 core=0 asm="mov    eax,esp" uasm="move eax/esp" stg="fe"
+x86.new_inst id=2 core=0 asm="call   16a0" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=3 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=4 core=0 uasm="store -/aux [0xbffefffc,4]" stg="fe"
+x86.new_inst id=5 core=0 uasm="call -/-" stg="fe"
+x86.new_inst id=6 core=0 spec="t" first_spec="t" asm="mov    edi,eax" uasm="move edi/eax" stg="fe"
+x86.new_inst id=7 core=0 spec="t" asm="call   1020" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=8 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=9 core=0 spec="t" uasm="store -/aux [0xbffefff8,4]" stg="fe"
+x86.new_inst id=10 core=0 spec="t" uasm="call -/-" stg="fe"
+x86.new_inst id=11 core=0 spec="t" asm="add    ebx,0x1ffc2" uasm="add ebx,zps,cf,of/ebx" stg="fe"
+mem.new_access name="A-1" type="load" state="x86-l1-0:load" addr=0x30
+mem.access name="A-1" state="x86-l1-0:load_lock"
+mem.access name="A-1" state="x86-l1-0:find_and_lock"
+mem.access name="A-1" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-1" set=0 way=1
+mem.access name="A-1" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-1" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-1" state="x86-l1-0:load_action"
+mem.access name="A-1" state="x86-l1-0:read_request"
+c clk=2
+x86.new_inst id=12 core=0 spec="t" asm="mov    eax,DWORD PTR [ebx-0x108]" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=13 core=0 spec="t" uasm="load eax/ea [0x1feba,4]" stg="fe"
+x86.new_inst id=14 core=0 spec="t" asm="pop    edx" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=15 core=0 spec="t" uasm="load edx/aux [0xbffefff8,4]" stg="fe"
+x86.new_inst id=16 core=0 spec="t" uasm="add esp/esp" stg="fe"
+x86.new_inst id=17 core=0 spec="t" asm="lea    esp,[esp+eax*4]" uasm="effaddr esp/esp,eax" stg="fe"
+x86.new_inst id=18 core=0 spec="t" asm="sub    edx,eax" uasm="sub edx,zps,cf,of/edx,eax" stg="fe"
+x86.new_inst id=19 core=0 spec="t" asm="push   edx" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=20 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=21 core=0 spec="t" uasm="store -/aux,edx [0xbffefff8,4]" stg="fe"
+x86.new_inst id=22 core=0 spec="t" asm="mov    eax,DWORD PTR [ebx+0x40]" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=23 core=0 spec="t" uasm="load eax/ea [0x20002,4]" stg="fe"
+x86.new_inst id=24 core=0 spec="t" asm="lea    esi,[esp+edx*4+0x8]" uasm="effaddr esi/esp,edx" stg="fe"
+x86.new_inst id=25 core=0 spec="t" asm="lea    ecx,[esp+0x4]" uasm="effaddr ecx/esp" stg="fe"
+x86.new_inst id=26 core=0 spec="t" asm="mov    ebp,esp" uasm="move ebp/esp" stg="fe"
+x86.new_inst id=27 core=0 spec="t" asm="and    esp,0xf0" uasm="and esp,zps,cf,of/esp" stg="fe"
+x86.new_inst id=28 core=0 spec="t" asm="push   eax" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=29 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=30 core=0 spec="t" uasm="store -/aux,eax [0xbffeffec,4]" stg="fe"
+x86.new_inst id=31 core=0 spec="t" asm="push   eax" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=32 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=33 core=0 spec="t" uasm="store -/aux,eax [0xbffeffe8,4]" stg="fe"
+x86.new_inst id=34 core=0 spec="t" asm="push   ebp" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=35 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=36 core=0 spec="t" uasm="store -/aux,ebp [0xbffeffe4,4]" stg="fe"
+x86.new_inst id=37 core=0 spec="t" asm="push   esi" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=38 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=39 core=0 spec="t" uasm="store -/aux,esi [0xbffeffe0,4]" stg="fe"
+x86.new_inst id=40 core=0 spec="t" asm="xor    ebp,ebp" uasm="xor ebp,zps,cf,of/ebp,ebp" stg="fe"
+x86.new_inst id=41 core=0 spec="t" asm="call   ef60" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=42 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=43 core=0 spec="t" uasm="store -/aux [0xbffeffdc,4]" stg="fe"
+x86.new_inst id=44 core=0 spec="t" uasm="call -/-" stg="fe"
+x86.new_inst id=45 core=0 spec="t" asm="lea    edx,[ebx-0x11d00]" uasm="effaddr edx/ebx" stg="fe"
+mem.new_access name="A-2" type="load" state="x86-l1-0:load" addr=0x44
+mem.access name="A-2" state="x86-l1-0:load_lock"
+mem.access name="A-2" state="x86-l1-0:find_and_lock"
+mem.access name="A-2" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-2" set=1 way=1
+mem.access name="A-2" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-2" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-2" state="x86-l1-0:load_action"
+mem.access name="A-2" state="x86-l1-0:read_request"
+c clk=5
+mem.access name="A-1" state="x86-l2:read_request_receive"
+mem.access name="A-1" state="x86-l2:find_and_lock"
+mem.access name="A-1" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-1" set=0 way=3
+mem.access name="A-1" state="x86-l2:find_and_lock_action"
+mem.access name="A-1" state="x86-l2:find_and_lock_finish"
+mem.access name="A-1" state="x86-l2:read_request_action"
+mem.access name="A-1" state="x86-l2:read_request_updown"
+mem.access name="A-1" state="x86-l2:read_request"
+c clk=6
+mem.access name="A-2" state="x86-l2:read_request_receive"
+mem.access name="A-2" state="x86-l2:find_and_lock"
+mem.access name="A-2" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-2" set=1 way=3
+mem.access name="A-2" state="x86-l2:find_and_lock_action"
+mem.access name="A-2" state="x86-l2:find_and_lock_finish"
+mem.access name="A-2" state="x86-l2:read_request_action"
+mem.access name="A-2" state="x86-l2:read_request_updown"
+mem.access name="A-2" state="x86-l2:read_request"
+c clk=9
+mem.access name="A-1" state="x86-mm:read_request_receive"
+mem.access name="A-1" state="x86-mm:find_and_lock"
+mem.access name="A-1" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-1" set=0 way=15
+c clk=10
+mem.access name="A-1" state="x86-mm:find_and_lock_action"
+mem.access name="A-1" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=0 way=15 tag=0x0 state="E"
+mem.access name="A-2" state="x86-mm:read_request_receive"
+mem.access name="A-1" state="x86-mm:read_request_action"
+mem.access name="A-2" state="x86-mm:find_and_lock"
+mem.access name="A-1" state="x86-mm:read_request_updown"
+mem.access name="A-2" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-2" set=1 way=15
+mem.access name="A-1" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=0 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=0 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=0 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-1" set=0 way=15
+c clk=11
+mem.access name="A-2" state="x86-mm:find_and_lock_action"
+mem.access name="A-2" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=1 way=15 tag=0x40 state="E"
+mem.access name="A-2" state="x86-mm:read_request_action"
+mem.access name="A-2" state="x86-mm:read_request_updown"
+mem.access name="A-2" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=1 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=1 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=1 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-2" set=1 way=15
+c clk=110
+mem.access name="A-1" state="x86-mm:read_request_reply"
+c clk=111
+mem.access name="A-2" state="x86-mm:read_request_reply"
+c clk=114
+mem.access name="A-1" state="x86-l2:read_request_finish"
+mem.access name="A-1" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=0 way=3 tag=0x0 state="E"
+mem.access name="A-1" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=0 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=0 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=0 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-1" set=0 way=3
+c clk=115
+mem.access name="A-2" state="x86-l2:read_request_finish"
+mem.access name="A-2" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=1 way=3 tag=0x40 state="E"
+mem.access name="A-2" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=1 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=1 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=1 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-2" set=1 way=3
+c clk=124
+mem.access name="A-1" state="x86-l2:read_request_reply"
+c clk=125
+mem.access name="A-2" state="x86-l2:read_request_reply"
+c clk=128
+mem.access name="A-1" state="x86-l1-0:read_request_finish"
+mem.access name="A-1" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=0 way=1 tag=0x0 state="E"
+mem.access name="A-1" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-1" set=0 way=1
+c clk=129
+mem.access name="A-1" state="x86-l1-0:load_finish"
+mem.end_access name="A-1"
+mem.access name="A-2" state="x86-l1-0:read_request_finish"
+mem.access name="A-2" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=1 way=1 tag=0x40 state="E"
+mem.access name="A-2" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-2" set=1 way=1
+c clk=130
+x86.inst id=1 core=0 stg="dec"
+x86.inst id=2 core=0 stg="dec"
+x86.inst id=3 core=0 stg="dec"
+x86.inst id=4 core=0 stg="dec"
+x86.inst id=5 core=0 stg="dec"
+x86.inst id=6 core=0 stg="dec"
+x86.inst id=7 core=0 stg="dec"
+x86.inst id=8 core=0 stg="dec"
+x86.inst id=9 core=0 stg="dec"
+x86.inst id=10 core=0 stg="dec"
+x86.new_inst id=46 core=0 spec="t" asm="mov    esp,DWORD PTR [esp]" uasm="effaddr ea/esp" stg="fe"
+x86.new_inst id=47 core=0 spec="t" uasm="load esp/ea [0xbffeffdc,4]" stg="fe"
+x86.new_inst id=48 core=0 spec="t" asm="jmp    edi" uasm="jump -/edi" stg="fe"
+x86.new_inst id=49 core=0 spec="t" asm="lea    esi,[esi]" uasm="effaddr esi/esi" stg="fe"
+mem.access name="A-2" state="x86-l1-0:load_finish"
+mem.end_access name="A-2"
+c clk=131
+x86.inst id=1 core=0 stg="di"
+x86.inst id=2 core=0 stg="di"
+x86.inst id=3 core=0 stg="di"
+x86.inst id=4 core=0 stg="di"
+x86.inst id=11 core=0 stg="dec"
+x86.inst id=12 core=0 stg="dec"
+x86.inst id=13 core=0 stg="dec"
+x86.inst id=14 core=0 stg="dec"
+x86.inst id=15 core=0 stg="dec"
+x86.inst id=16 core=0 stg="dec"
+x86.inst id=17 core=0 stg="dec"
+x86.new_inst id=50 core=0 spec="t" asm="call   18974" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=51 core=0 spec="t" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=52 core=0 spec="t" uasm="store -/aux [0x106b,4]" stg="fe"
+x86.new_inst id=53 core=0 spec="t" uasm="call -/-" stg="fe"
+x86.new_inst id=54 core=0 spec="t" asm="add    ecx,0x1ff7b" uasm="add ecx,zps,cf,of/ecx" stg="fe"
+x86.new_inst id=55 core=0 spec="t" asm="lea    eax,[ecx+0x878]" uasm="effaddr eax/ecx" stg="fe"
+mem.new_access name="A-3" type="load" state="x86-l1-0:load" addr=0x80
+mem.access name="A-3" state="x86-l1-0:load_lock"
+mem.access name="A-3" state="x86-l1-0:find_and_lock"
+mem.access name="A-3" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-3" set=2 way=1
+mem.access name="A-3" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-3" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-3" state="x86-l1-0:load_action"
+mem.access name="A-3" state="x86-l1-0:read_request"
+c clk=132
+x86.inst id=1 core=0 stg="i"
+x86.inst id=2 core=0 stg="i"
+x86.inst id=5 core=0 stg="di"
+x86.inst id=6 core=0 stg="di"
+x86.inst id=7 core=0 stg="di"
+x86.inst id=8 core=0 stg="di"
+x86.inst id=18 core=0 stg="dec"
+x86.inst id=19 core=0 stg="dec"
+x86.inst id=20 core=0 stg="dec"
+x86.inst id=21 core=0 stg="dec"
+x86.inst id=22 core=0 stg="dec"
+x86.inst id=23 core=0 stg="dec"
+x86.inst id=24 core=0 stg="dec"
+x86.new_inst id=56 core=0 spec="t" asm="ret" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=57 core=0 spec="t" uasm="load aux/aux [0x106b,4]" stg="fe"
+x86.new_inst id=58 core=0 spec="t" uasm="add esp/esp" stg="fe"
+x86.new_inst id=59 core=0 spec="t" uasm="ret -/aux" stg="fe"
+x86.new_inst id=60 core=0 spec="t" asm="lea    esi,[esi]" uasm="effaddr esi/esi" stg="fe"
+x86.new_inst id=61 core=0 spec="t" asm="lea    edi,[edi]" uasm="effaddr edi/edi" stg="fe"
+c clk=133
+x86.inst id=1 core=0 stg="wb"
+x86.inst id=2 core=0 stg="wb"
+x86.inst id=3 core=0 stg="i"
+x86.inst id=5 core=0 stg="i"
+x86.inst id=6 core=0 stg="i"
+x86.inst id=7 core=0 stg="i"
+x86.inst id=9 core=0 stg="di"
+x86.inst id=10 core=0 stg="di"
+x86.inst id=11 core=0 stg="di"
+x86.inst id=12 core=0 stg="di"
+x86.inst id=25 core=0 stg="dec"
+x86.inst id=26 core=0 stg="dec"
+x86.inst id=27 core=0 stg="dec"
+x86.inst id=28 core=0 stg="dec"
+x86.inst id=29 core=0 stg="dec"
+x86.inst id=30 core=0 stg="dec"
+x86.new_inst id=62 core=0 spec="t" asm="mov    eax,DWORD PTR [esp+0x4]" uasm="effaddr ea/esp" stg="fe"
+x86.new_inst id=63 core=0 spec="t" uasm="load eax/ea [0x1073,4]" stg="fe"
+x86.new_inst id=64 core=0 spec="t" asm="add    DWORD PTR [eax+0x4],0x1" uasm="effaddr ea/eax" stg="fe"
+x86.new_inst id=65 core=0 spec="t" uasm="load data/ea [0x248c0002,4]" stg="fe"
+x86.new_inst id=66 core=0 spec="t" uasm="add data,zps,cf,of/data" stg="fe"
+x86.new_inst id=67 core=0 spec="t" uasm="store -/ea,data [0x248c0002,4]" stg="fe"
+c clk=134
+x86.inst id=1 core=0 stg="co"
+x86.inst id=2 core=0 stg="co"
+x86.inst id=5 core=0 stg="wb"
+x86.inst id=6 core=0 stg="wb"
+x86.inst id=67 core=0 stg="sq"
+x86.inst id=66 core=0 stg="sq"
+x86.inst id=65 core=0 stg="sq"
+x86.inst id=64 core=0 stg="sq"
+x86.inst id=63 core=0 stg="sq"
+x86.inst id=62 core=0 stg="sq"
+x86.inst id=61 core=0 stg="sq"
+x86.inst id=60 core=0 stg="sq"
+x86.inst id=59 core=0 stg="sq"
+x86.inst id=58 core=0 stg="sq"
+x86.inst id=57 core=0 stg="sq"
+x86.inst id=56 core=0 stg="sq"
+x86.inst id=55 core=0 stg="sq"
+x86.inst id=54 core=0 stg="sq"
+x86.inst id=53 core=0 stg="sq"
+x86.inst id=52 core=0 stg="sq"
+x86.inst id=51 core=0 stg="sq"
+x86.inst id=50 core=0 stg="sq"
+x86.inst id=49 core=0 stg="sq"
+x86.inst id=48 core=0 stg="sq"
+x86.inst id=47 core=0 stg="sq"
+x86.inst id=46 core=0 stg="sq"
+x86.inst id=45 core=0 stg="sq"
+x86.inst id=44 core=0 stg="sq"
+x86.inst id=43 core=0 stg="sq"
+x86.inst id=42 core=0 stg="sq"
+x86.inst id=41 core=0 stg="sq"
+x86.inst id=40 core=0 stg="sq"
+x86.inst id=39 core=0 stg="sq"
+x86.inst id=38 core=0 stg="sq"
+x86.inst id=37 core=0 stg="sq"
+x86.inst id=36 core=0 stg="sq"
+x86.inst id=35 core=0 stg="sq"
+x86.inst id=34 core=0 stg="sq"
+x86.inst id=33 core=0 stg="sq"
+x86.inst id=32 core=0 stg="sq"
+x86.inst id=31 core=0 stg="sq"
+x86.inst id=30 core=0 stg="sq"
+x86.inst id=29 core=0 stg="sq"
+x86.inst id=28 core=0 stg="sq"
+x86.inst id=27 core=0 stg="sq"
+x86.inst id=26 core=0 stg="sq"
+x86.inst id=25 core=0 stg="sq"
+x86.inst id=24 core=0 stg="sq"
+x86.inst id=23 core=0 stg="sq"
+x86.inst id=22 core=0 stg="sq"
+x86.inst id=21 core=0 stg="sq"
+x86.inst id=20 core=0 stg="sq"
+x86.inst id=19 core=0 stg="sq"
+x86.inst id=18 core=0 stg="sq"
+x86.inst id=17 core=0 stg="sq"
+x86.inst id=16 core=0 stg="sq"
+x86.inst id=15 core=0 stg="sq"
+x86.inst id=14 core=0 stg="sq"
+x86.inst id=13 core=0 stg="sq"
+x86.inst id=12 core=0 stg="sq"
+x86.inst id=11 core=0 stg="sq"
+x86.inst id=10 core=0 stg="sq"
+x86.inst id=9 core=0 stg="sq"
+x86.inst id=8 core=0 stg="sq"
+x86.inst id=7 core=0 stg="sq"
+x86.inst id=6 core=0 stg="sq"
+x86.new_inst id=68 core=0 asm="push   ebp" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=69 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=70 core=0 uasm="store -/aux,ebp [0xbffefff8,4]" stg="fe"
+x86.new_inst id=71 core=0 asm="mov    ebp,esp" uasm="move ebp/esp" stg="fe"
+x86.new_inst id=72 core=0 asm="push   edi" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=73 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=74 core=0 uasm="store -/aux,edi [0xbffefff4,4]" stg="fe"
+x86.new_inst id=75 core=0 asm="push   esi" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=76 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=77 core=0 uasm="store -/aux,esi [0xbffefff0,4]" stg="fe"
+x86.new_inst id=78 core=0 asm="push   ebx" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=79 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=80 core=0 uasm="store -/aux,ebx [0xbffeffec,4]" stg="fe"
+x86.new_inst id=81 core=0 asm="sub    esp,0x5c" uasm="sub esp,zps,cf,of/esp" stg="fe"
+x86.new_inst id=82 core=0 asm="call   18978" uasm="sub esp/esp" stg="fe"
+x86.new_inst id=83 core=0 uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=84 core=0 uasm="store -/aux [0xbffeff8c,4]" stg="fe"
+x86.new_inst id=85 core=0 uasm="call -/-" stg="fe"
+x86.new_inst id=86 core=0 spec="t" first_spec="t" asm="add    ebx,0x1f952" uasm="add ebx,zps,cf,of/ebx" stg="fe"
+x86.new_inst id=87 core=0 spec="t" asm="mov    DWORD PTR [ebp-0x44],eax" uasm="effaddr ea/ebp" stg="fe"
+x86.new_inst id=88 core=0 spec="t" uasm="store -/eax,ea [0xbffeffb4,4]" stg="fe"
+x86.new_inst id=89 core=0 spec="t" asm="rdtsc" uasm="move eax,edx/-" stg="fe"
+x86.new_inst id=90 core=0 spec="t" asm="mov    DWORD PTR [ebx-0x2f0],eax" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=91 core=0 spec="t" uasm="store -/eax,ea [0x1f662,4]" stg="fe"
+x86.new_inst id=92 core=0 spec="t" asm="mov    eax,DWORD PTR [ebx-0xd0]" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=93 core=0 spec="t" uasm="load eax/ea [0x1f882,4]" stg="fe"
+mem.new_access name="A-4" type="load" state="x86-l1-0:load" addr=0x6a0
+mem.access name="A-4" state="x86-l1-0:load_lock"
+mem.access name="A-4" state="x86-l1-0:find_and_lock"
+mem.access name="A-4" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-4" set=10 way=1
+mem.access name="A-4" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-4" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-4" state="x86-l1-0:load_action"
+mem.access name="A-4" state="x86-l1-0:read_request"
+c clk=135
+x86.end_inst id=1 core=0
+x86.end_inst id=2 core=0
+x86.end_inst id=67 core=0
+x86.end_inst id=66 core=0
+x86.end_inst id=65 core=0
+x86.end_inst id=64 core=0
+x86.end_inst id=63 core=0
+x86.end_inst id=62 core=0
+x86.end_inst id=61 core=0
+x86.end_inst id=60 core=0
+x86.end_inst id=59 core=0
+x86.end_inst id=58 core=0
+x86.end_inst id=57 core=0
+x86.end_inst id=56 core=0
+x86.end_inst id=55 core=0
+x86.end_inst id=54 core=0
+x86.end_inst id=53 core=0
+x86.end_inst id=52 core=0
+x86.end_inst id=51 core=0
+x86.end_inst id=50 core=0
+x86.end_inst id=49 core=0
+x86.end_inst id=48 core=0
+x86.end_inst id=47 core=0
+x86.end_inst id=46 core=0
+x86.end_inst id=45 core=0
+x86.end_inst id=44 core=0
+x86.end_inst id=43 core=0
+x86.end_inst id=42 core=0
+x86.end_inst id=41 core=0
+x86.end_inst id=40 core=0
+x86.end_inst id=39 core=0
+x86.end_inst id=38 core=0
+x86.end_inst id=37 core=0
+x86.end_inst id=36 core=0
+x86.end_inst id=35 core=0
+x86.end_inst id=34 core=0
+x86.end_inst id=33 core=0
+x86.end_inst id=32 core=0
+x86.end_inst id=31 core=0
+x86.end_inst id=30 core=0
+x86.end_inst id=29 core=0
+x86.end_inst id=28 core=0
+x86.end_inst id=27 core=0
+x86.end_inst id=26 core=0
+x86.end_inst id=25 core=0
+x86.end_inst id=24 core=0
+x86.end_inst id=23 core=0
+x86.end_inst id=22 core=0
+x86.end_inst id=21 core=0
+x86.end_inst id=20 core=0
+x86.end_inst id=19 core=0
+x86.end_inst id=18 core=0
+x86.end_inst id=17 core=0
+x86.end_inst id=16 core=0
+x86.end_inst id=15 core=0
+x86.end_inst id=14 core=0
+x86.end_inst id=13 core=0
+x86.end_inst id=12 core=0
+x86.end_inst id=11 core=0
+x86.end_inst id=10 core=0
+x86.end_inst id=9 core=0
+x86.end_inst id=8 core=0
+x86.end_inst id=7 core=0
+x86.end_inst id=6 core=0
+x86.inst id=3 core=0 stg="wb"
+x86.new_inst id=94 core=0 spec="t" asm="mov    esi,0x6fffffff" uasm="move esi/-" stg="fe"
+x86.new_inst id=95 core=0 spec="t" asm="mov    DWORD PTR [ebx-0x2ec],edx" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=96 core=0 spec="t" uasm="store -/edx,ea [0x1f666,4]" stg="fe"
+x86.new_inst id=97 core=0 spec="t" asm="lea    edx,[ebx-0xd0]" uasm="effaddr edx/ebx" stg="fe"
+x86.new_inst id=98 core=0 spec="t" asm="mov    edi,edx" uasm="move edi/edx" stg="fe"
+x86.new_inst id=99 core=0 spec="t" asm="sub    edi,DWORD PTR [ebx]" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=100 core=0 spec="t" uasm="load data/ea [0x1f952,4]" stg="fe"
+x86.new_inst id=101 core=0 spec="t" uasm="sub edi,zps,cf,of/edi,data" stg="fe"
+x86.new_inst id=102 core=0 spec="t" asm="test   eax,eax" uasm="and zps,cf,of/eax,eax" stg="fe"
+mem.new_access name="A-5" type="load" state="x86-l1-0:load" addr=0x6c5
+mem.access name="A-5" state="x86-l1-0:load_lock"
+mem.access name="A-3" state="x86-l2:read_request_receive"
+mem.access name="A-5" state="x86-l1-0:find_and_lock"
+mem.access name="A-3" state="x86-l2:find_and_lock"
+mem.access name="A-5" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-5" set=11 way=1
+mem.access name="A-3" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-3" set=2 way=3
+mem.access name="A-5" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-3" state="x86-l2:find_and_lock_action"
+mem.access name="A-5" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-3" state="x86-l2:find_and_lock_finish"
+mem.access name="A-5" state="x86-l1-0:load_action"
+mem.access name="A-3" state="x86-l2:read_request_action"
+mem.access name="A-5" state="x86-l1-0:read_request"
+mem.access name="A-3" state="x86-l2:read_request_updown"
+mem.access name="A-3" state="x86-l2:read_request"
+c clk=136
+x86.inst id=3 core=0 stg="co"
+x86.inst id=4 core=0 stg="co"
+x86.inst id=5 core=0 stg="co"
+mem.new_access name="A-6" type="store" state="x86-l1-0:store" addr=0x1ffc
+mem.access name="A-6" state="x86-l1-0:store_lock"
+c clk=137
+x86.end_inst id=3 core=0
+x86.end_inst id=4 core=0
+x86.end_inst id=5 core=0
+c clk=138
+mem.access name="A-4" state="x86-l2:read_request_receive"
+mem.access name="A-4" state="x86-l2:find_and_lock"
+mem.access name="A-4" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-4" set=26 way=3
+mem.access name="A-4" state="x86-l2:find_and_lock_action"
+mem.access name="A-4" state="x86-l2:find_and_lock_finish"
+mem.access name="A-4" state="x86-l2:read_request_action"
+mem.access name="A-4" state="x86-l2:read_request_updown"
+mem.access name="A-4" state="x86-l2:read_request"
+c clk=139
+mem.access name="A-5" state="x86-l2:read_request_receive"
+mem.access name="A-3" state="x86-mm:read_request_receive"
+mem.access name="A-5" state="x86-l2:find_and_lock"
+mem.access name="A-3" state="x86-mm:find_and_lock"
+mem.access name="A-5" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-5" set=27 way=3
+mem.access name="A-3" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-3" set=2 way=15
+mem.access name="A-5" state="x86-l2:find_and_lock_action"
+mem.access name="A-5" state="x86-l2:find_and_lock_finish"
+mem.access name="A-5" state="x86-l2:read_request_action"
+mem.access name="A-5" state="x86-l2:read_request_updown"
+mem.access name="A-5" state="x86-l2:read_request"
+c clk=140
+mem.access name="A-3" state="x86-mm:find_and_lock_action"
+mem.access name="A-3" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=2 way=15 tag=0x80 state="E"
+mem.access name="A-3" state="x86-mm:read_request_action"
+mem.access name="A-3" state="x86-mm:read_request_updown"
+mem.access name="A-3" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=2 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=2 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=2 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-3" set=2 way=15
+c clk=142
+mem.access name="A-4" state="x86-mm:read_request_receive"
+mem.access name="A-4" state="x86-mm:find_and_lock"
+mem.access name="A-4" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-4" set=26 way=15
+c clk=143
+mem.access name="A-4" state="x86-mm:find_and_lock_action"
+mem.access name="A-4" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=26 way=15 tag=0x680 state="E"
+mem.access name="A-5" state="x86-mm:read_request_receive"
+mem.access name="A-4" state="x86-mm:read_request_action"
+mem.access name="A-5" state="x86-mm:find_and_lock"
+mem.access name="A-4" state="x86-mm:read_request_updown"
+mem.access name="A-5" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-5" set=27 way=15
+mem.access name="A-4" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=26 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=26 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=26 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-4" set=26 way=15
+c clk=144
+mem.access name="A-5" state="x86-mm:find_and_lock_action"
+mem.access name="A-5" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=27 way=15 tag=0x6c0 state="E"
+mem.access name="A-5" state="x86-mm:read_request_action"
+mem.access name="A-5" state="x86-mm:read_request_updown"
+mem.access name="A-5" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=27 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=27 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=27 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-5" set=27 way=15
+c clk=240
+mem.access name="A-3" state="x86-mm:read_request_reply"
+c clk=243
+mem.access name="A-4" state="x86-mm:read_request_reply"
+c clk=244
+mem.access name="A-5" state="x86-mm:read_request_reply"
+mem.access name="A-3" state="x86-l2:read_request_finish"
+mem.access name="A-3" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=2 way=3 tag=0x80 state="E"
+mem.access name="A-3" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=2 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=2 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=2 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-3" set=2 way=3
+c clk=247
+mem.access name="A-4" state="x86-l2:read_request_finish"
+mem.access name="A-4" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=26 way=3 tag=0x680 state="E"
+mem.access name="A-4" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=26 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=26 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=26 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-4" set=26 way=3
+c clk=248
+mem.access name="A-5" state="x86-l2:read_request_finish"
+mem.access name="A-5" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=27 way=3 tag=0x6c0 state="E"
+mem.access name="A-5" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=27 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=27 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=27 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-5" set=27 way=3
+c clk=254
+mem.access name="A-3" state="x86-l2:read_request_reply"
+c clk=257
+mem.access name="A-4" state="x86-l2:read_request_reply"
+c clk=258
+mem.access name="A-5" state="x86-l2:read_request_reply"
+mem.access name="A-3" state="x86-l1-0:read_request_finish"
+mem.access name="A-3" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=2 way=1 tag=0x80 state="E"
+mem.access name="A-3" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-3" set=2 way=1
+c clk=259
+mem.access name="A-3" state="x86-l1-0:load_finish"
+mem.end_access name="A-3"
+c clk=261
+mem.access name="A-4" state="x86-l1-0:read_request_finish"
+mem.access name="A-4" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=10 way=1 tag=0x680 state="E"
+mem.access name="A-4" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-4" set=10 way=1
+c clk=262
+mem.access name="A-4" state="x86-l1-0:load_finish"
+mem.end_access name="A-4"
+mem.access name="A-5" state="x86-l1-0:read_request_finish"
+mem.access name="A-5" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=11 way=1 tag=0x6c0 state="E"
+mem.access name="A-5" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-5" set=11 way=1
+c clk=263
+x86.inst id=68 core=0 stg="dec"
+x86.inst id=69 core=0 stg="dec"
+x86.inst id=70 core=0 stg="dec"
+x86.inst id=71 core=0 stg="dec"
+x86.inst id=72 core=0 stg="dec"
+x86.inst id=73 core=0 stg="dec"
+x86.inst id=74 core=0 stg="dec"
+x86.inst id=75 core=0 stg="dec"
+x86.inst id=76 core=0 stg="dec"
+x86.inst id=77 core=0 stg="dec"
+x86.new_inst id=103 core=0 spec="t" asm="mov    DWORD PTR [ebx+0x564],edx" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=104 core=0 spec="t" uasm="store -/edx,ea [0x1feb6,4]" stg="fe"
+mem.access name="A-5" state="x86-l1-0:load_finish"
+mem.end_access name="A-5"
+mem.access name="A-6" state="x86-l1-0:store_lock"
+mem.access name="A-6" state="x86-l1-0:find_and_lock"
+mem.access name="A-6" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-6" set=15 way=1
+mem.access name="A-6" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-6" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-6" state="x86-l1-0:store_action"
+mem.access name="A-6" state="x86-l1-0:write_request"
+c clk=264
+x86.inst id=68 core=0 stg="di"
+x86.inst id=69 core=0 stg="di"
+x86.inst id=70 core=0 stg="di"
+x86.inst id=71 core=0 stg="di"
+x86.inst id=78 core=0 stg="dec"
+x86.inst id=79 core=0 stg="dec"
+x86.inst id=80 core=0 stg="dec"
+x86.inst id=81 core=0 stg="dec"
+x86.inst id=82 core=0 stg="dec"
+x86.inst id=83 core=0 stg="dec"
+x86.inst id=84 core=0 stg="dec"
+x86.inst id=85 core=0 stg="dec"
+x86.inst id=86 core=0 stg="dec"
+x86.new_inst id=105 core=0 spec="t" asm="mov    DWORD PTR [ebx+0x55c],edi" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=106 core=0 spec="t" uasm="store -/edi,ea [0x1feae,4]" stg="fe"
+x86.new_inst id=107 core=0 spec="t" asm="jne    1709" uasm="branch -/zps" stg="fe"
+x86.new_inst id=108 core=0 spec="t" asm="jmp    1738" uasm="jump -/-" stg="fe"
+x86.new_inst id=109 core=0 spec="t" asm="mov    ecx,0x70000021" uasm="move ecx/-" stg="fe"
+c clk=265
+x86.inst id=68 core=0 stg="i"
+x86.inst id=72 core=0 stg="di"
+x86.inst id=73 core=0 stg="di"
+x86.inst id=74 core=0 stg="di"
+x86.inst id=75 core=0 stg="di"
+x86.inst id=87 core=0 stg="dec"
+x86.inst id=88 core=0 stg="dec"
+x86.inst id=89 core=0 stg="dec"
+x86.inst id=90 core=0 stg="dec"
+x86.inst id=91 core=0 stg="dec"
+x86.inst id=92 core=0 stg="dec"
+x86.inst id=93 core=0 stg="dec"
+x86.new_inst id=110 core=0 spec="t" asm="sub    ecx,eax" uasm="sub ecx,zps,cf,of/ecx,eax" stg="fe"
+x86.new_inst id=111 core=0 spec="t" asm="mov    eax,ecx" uasm="move eax/ecx" stg="fe"
+x86.new_inst id=112 core=0 spec="t" asm="mov    DWORD PTR [ebx+eax*4+0x57c],edx" uasm="effaddr ea/ebx,eax" stg="fe"
+x86.new_inst id=113 core=0 spec="t" uasm="store -/edx,ea [0xa801ff52,4]" stg="fe"
+c clk=266
+x86.inst id=68 core=0 stg="wb"
+x86.inst id=69 core=0 stg="i"
+x86.inst id=71 core=0 stg="i"
+x86.inst id=72 core=0 stg="i"
+x86.inst id=76 core=0 stg="di"
+x86.inst id=77 core=0 stg="di"
+x86.inst id=78 core=0 stg="di"
+x86.inst id=79 core=0 stg="di"
+x86.inst id=94 core=0 stg="dec"
+x86.inst id=95 core=0 stg="dec"
+x86.inst id=96 core=0 stg="dec"
+x86.inst id=97 core=0 stg="dec"
+x86.inst id=98 core=0 stg="dec"
+x86.new_inst id=114 core=0 spec="t" asm="add    edx,0x8" uasm="add edx,zps,cf,of/edx" stg="fe"
+x86.new_inst id=115 core=0 spec="t" asm="mov    eax,DWORD PTR [edx]" uasm="effaddr ea/edx" stg="fe"
+x86.new_inst id=116 core=0 spec="t" uasm="load eax/ea [0x1f88a,4]" stg="fe"
+x86.new_inst id=117 core=0 spec="t" asm="test   eax,eax" uasm="and zps,cf,of/eax,eax" stg="fe"
+x86.new_inst id=118 core=0 spec="t" asm="je     1738" uasm="branch -/zps" stg="fe"
+x86.new_inst id=119 core=0 spec="t" asm="cmp    eax,0x21" uasm="sub zps,cf,of/eax" stg="fe"
+x86.new_inst id=120 core=0 spec="t" asm="jbe    16f9" uasm="branch -/cf,zps" stg="fe"
+x86.new_inst id=121 core=0 spec="t" asm="mov    ecx,esi" uasm="move ecx/esi" stg="fe"
+x86.new_inst id=122 core=0 spec="t" asm="sub    ecx,eax" uasm="sub ecx,zps,cf,of/ecx,eax" stg="fe"
+x86.new_inst id=123 core=0 spec="t" asm="cmp    ecx,0xf" uasm="sub zps,cf,of/ecx" stg="fe"
+x86.new_inst id=124 core=0 spec="t" asm="jbe    16f0" uasm="branch -/cf,zps" stg="fe"
+x86.new_inst id=125 core=0 spec="t" asm="lea    ecx,[eax+eax]" uasm="effaddr ecx/eax,eax" stg="fe"
+mem.new_access name="A-7" type="load" state="x86-l1-0:load" addr=0x700
+mem.access name="A-7" state="x86-l1-0:load_lock"
+c clk=267
+x86.inst id=68 core=0 stg="co"
+x86.inst id=71 core=0 stg="wb"
+x86.inst id=72 core=0 stg="wb"
+x86.inst id=73 core=0 stg="i"
+x86.inst id=75 core=0 stg="i"
+x86.inst id=80 core=0 stg="di"
+x86.inst id=81 core=0 stg="di"
+x86.inst id=82 core=0 stg="di"
+x86.inst id=83 core=0 stg="di"
+x86.inst id=99 core=0 stg="dec"
+x86.inst id=100 core=0 stg="dec"
+x86.inst id=101 core=0 stg="dec"
+x86.inst id=102 core=0 stg="dec"
+x86.inst id=103 core=0 stg="dec"
+x86.inst id=104 core=0 stg="dec"
+x86.inst id=105 core=0 stg="dec"
+x86.inst id=106 core=0 stg="dec"
+x86.new_inst id=126 core=0 spec="t" asm="sar    ecx,1" uasm="shift ecx,cf,of/ecx" stg="fe"
+x86.new_inst id=127 core=0 spec="t" asm="cmp    ecx,0xfc" uasm="sub zps,cf,of/ecx" stg="fe"
+x86.new_inst id=128 core=0 spec="t" asm="jbe    1918" uasm="branch -/cf,zps" stg="fe"
+x86.new_inst id=129 core=0 spec="t" asm="not    ecx" uasm="not ecx/ecx" stg="fe"
+x86.new_inst id=130 core=0 spec="t" asm="mov    DWORD PTR [ebx+ecx*4+0x644],edx" uasm="effaddr ea/ebx,ecx" stg="fe"
+x86.new_inst id=131 core=0 spec="t" uasm="store -/edx,ea [0xb3f9e76e,4]" stg="fe"
+mem.access name="A-6" state="x86-l2:write_request_receive"
+mem.access name="A-6" state="x86-l2:find_and_lock"
+mem.access name="A-6" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-6" set=63 way=3
+mem.access name="A-6" state="x86-l2:find_and_lock_action"
+mem.access name="A-6" state="x86-l2:find_and_lock_finish"
+mem.access name="A-6" state="x86-l2:write_request_action"
+mem.access name="A-6" state="x86-l2:invalidate"
+mem.access name="A-6" state="x86-l2:invalidate_finish"
+mem.access name="A-6" state="x86-l2:write_request_exclusive"
+mem.access name="A-6" state="x86-l2:write_request_updown"
+mem.access name="A-6" state="x86-l2:write_request"
+c clk=268
+x86.end_inst id=68 core=0
+x86.inst id=69 core=0 stg="wb"
+x86.inst id=75 core=0 stg="wb"
+x86.inst id=76 core=0 stg="i"
+x86.inst id=78 core=0 stg="i"
+x86.inst id=84 core=0 stg="di"
+x86.inst id=85 core=0 stg="di"
+x86.inst id=86 core=0 stg="di"
+x86.inst id=87 core=0 stg="di"
+x86.inst id=107 core=0 stg="dec"
+x86.inst id=108 core=0 stg="dec"
+x86.inst id=109 core=0 stg="dec"
+x86.inst id=110 core=0 stg="dec"
+x86.new_inst id=132 core=0 spec="t" asm="add    edx,0x8" uasm="add edx,zps,cf,of/edx" stg="fe"
+x86.new_inst id=133 core=0 spec="t" asm="mov    eax,DWORD PTR [edx]" uasm="effaddr ea/edx" stg="fe"
+x86.new_inst id=134 core=0 spec="t" uasm="load eax/ea [0x1f892,4]" stg="fe"
+x86.new_inst id=135 core=0 spec="t" asm="test   eax,eax" uasm="and zps,cf,of/eax,eax" stg="fe"
+x86.new_inst id=136 core=0 spec="t" asm="jne    1709" uasm="branch -/zps" stg="fe"
+c clk=269
+x86.inst id=69 core=0 stg="co"
+x86.inst id=70 core=0 stg="co"
+x86.inst id=71 core=0 stg="co"
+x86.inst id=72 core=0 stg="co"
+x86.inst id=73 core=0 stg="wb"
+x86.inst id=78 core=0 stg="wb"
+x86.inst id=79 core=0 stg="i"
+x86.inst id=81 core=0 stg="i"
+x86.inst id=85 core=0 stg="i"
+x86.inst id=86 core=0 stg="i"
+x86.inst id=88 core=0 stg="di"
+x86.inst id=89 core=0 stg="di"
+x86.inst id=90 core=0 stg="di"
+x86.inst id=91 core=0 stg="di"
+x86.inst id=111 core=0 stg="dec"
+x86.inst id=112 core=0 stg="dec"
+x86.inst id=113 core=0 stg="dec"
+x86.new_inst id=137 core=0 spec="t" asm="nop" uasm="nop -/-" stg="fe"
+x86.new_inst id=138 core=0 spec="t" asm="test   edi,edi" uasm="and zps,cf,of/edi,edi" stg="fe"
+x86.new_inst id=139 core=0 spec="t" asm="je     17a4" uasm="branch -/zps" stg="fe"
+x86.new_inst id=140 core=0 spec="t" asm="mov    eax,DWORD PTR [ebx+0x58c]" uasm="effaddr ea/ebx" stg="fe"
+x86.new_inst id=141 core=0 spec="t" uasm="load eax/ea [0x1fede,4]" stg="fe"
+mem.new_access name="A-8" type="store" state="x86-l1-0:store" addr=0x1ff8
+mem.access name="A-8" state="x86-l1-0:store_lock"
+c clk=270
+x86.end_inst id=69 core=0
+x86.end_inst id=70 core=0
+x86.end_inst id=71 core=0
+x86.end_inst id=72 core=0
+x86.inst id=73 core=0 stg="co"
+x86.inst id=74 core=0 stg="co"
+x86.inst id=75 core=0 stg="co"
+x86.inst id=76 core=0 stg="wb"
+x86.inst id=81 core=0 stg="wb"
+x86.inst id=85 core=0 stg="wb"
+x86.inst id=86 core=0 stg="wb"
+x86.inst id=141 core=0 stg="sq"
+x86.inst id=140 core=0 stg="sq"
+x86.inst id=139 core=0 stg="sq"
+x86.inst id=138 core=0 stg="sq"
+x86.inst id=137 core=0 stg="sq"
+x86.inst id=136 core=0 stg="sq"
+x86.inst id=135 core=0 stg="sq"
+x86.inst id=134 core=0 stg="sq"
+x86.inst id=133 core=0 stg="sq"
+x86.inst id=132 core=0 stg="sq"
+x86.inst id=131 core=0 stg="sq"
+x86.inst id=130 core=0 stg="sq"
+x86.inst id=129 core=0 stg="sq"
+x86.inst id=128 core=0 stg="sq"
+x86.inst id=127 core=0 stg="sq"
+x86.inst id=126 core=0 stg="sq"
+x86.inst id=125 core=0 stg="sq"
+x86.inst id=124 core=0 stg="sq"
+x86.inst id=123 core=0 stg="sq"
+x86.inst id=122 core=0 stg="sq"
+x86.inst id=121 core=0 stg="sq"
+x86.inst id=120 core=0 stg="sq"
+x86.inst id=119 core=0 stg="sq"
+x86.inst id=118 core=0 stg="sq"
+x86.inst id=117 core=0 stg="sq"
+x86.inst id=116 core=0 stg="sq"
+x86.inst id=115 core=0 stg="sq"
+x86.inst id=114 core=0 stg="sq"
+x86.inst id=113 core=0 stg="sq"
+x86.inst id=112 core=0 stg="sq"
+x86.inst id=111 core=0 stg="sq"
+x86.inst id=110 core=0 stg="sq"
+x86.inst id=109 core=0 stg="sq"
+x86.inst id=108 core=0 stg="sq"
+x86.inst id=107 core=0 stg="sq"
+x86.inst id=106 core=0 stg="sq"
+x86.inst id=105 core=0 stg="sq"
+x86.inst id=104 core=0 stg="sq"
+x86.inst id=103 core=0 stg="sq"
+x86.inst id=102 core=0 stg="sq"
+x86.inst id=101 core=0 stg="sq"
+x86.inst id=100 core=0 stg="sq"
+x86.inst id=99 core=0 stg="sq"
+x86.inst id=98 core=0 stg="sq"
+x86.inst id=97 core=0 stg="sq"
+x86.inst id=96 core=0 stg="sq"
+x86.inst id=95 core=0 stg="sq"
+x86.inst id=94 core=0 stg="sq"
+x86.inst id=93 core=0 stg="sq"
+x86.inst id=92 core=0 stg="sq"
+x86.inst id=91 core=0 stg="sq"
+x86.inst id=90 core=0 stg="sq"
+x86.inst id=89 core=0 stg="sq"
+x86.inst id=88 core=0 stg="sq"
+x86.inst id=87 core=0 stg="sq"
+x86.inst id=86 core=0 stg="sq"
+x86.inst id=82 core=0 stg="i"
+x86.new_inst id=142 core=0 asm="mov    ebx,DWORD PTR [esp]" uasm="effaddr ea/esp" stg="fe"
+x86.new_inst id=143 core=0 uasm="load ebx/ea [0xbffeff8c,4]" stg="fe"
+x86.new_inst id=144 core=0 asm="ret" uasm="effaddr aux/esp" stg="fe"
+x86.new_inst id=145 core=0 uasm="load aux/aux [0xbffeff8c,4]" stg="fe"
+x86.new_inst id=146 core=0 uasm="add esp/esp" stg="fe"
+x86.new_inst id=147 core=0 uasm="ret -/aux" stg="fe"
+x86.new_inst id=148 core=0 spec="t" first_spec="t" asm="add    BYTE PTR [eax],al" uasm="effaddr ea/eax" stg="fe"
+x86.new_inst id=149 core=0 spec="t" uasm="load data/ea [0xbfff0000,1]" stg="fe"
+x86.new_inst id=150 core=0 spec="t" uasm="add data,zps,cf,of/data,eax" stg="fe"
+x86.new_inst id=151 core=0 spec="t" uasm="store -/ea,data [0xbfff0000,1]" stg="fe"
+x86.new_inst id=152 core=0 spec="t" asm="add    BYTE PTR [eax],al" uasm="effaddr ea/eax" stg="fe"
+x86.new_inst id=153 core=0 spec="t" uasm="load data/ea [0xbfff0000,1]" stg="fe"
+x86.new_inst id=154 core=0 spec="t" uasm="add data,zps,cf,of/data,eax" stg="fe"
+x86.new_inst id=155 core=0 spec="t" uasm="store -/ea,data [0xbfff0000,1]" stg="fe"
+mem.new_access name="A-9" type="load" state="x86-l1-0:load" addr=0x7978
+mem.new_access name="A-10" type="store" state="x86-l1-0:store" addr=0x1ff4
+mem.access name="A-9" state="x86-l1-0:load_lock"
+mem.access name="A-10" state="x86-l1-0:store_lock"
+c clk=271
+x86.end_inst id=73 core=0
+x86.end_inst id=74 core=0
+x86.end_inst id=75 core=0
+x86.end_inst id=141 core=0
+x86.end_inst id=140 core=0
+x86.end_inst id=139 core=0
+x86.end_inst id=138 core=0
+x86.end_inst id=137 core=0
+x86.end_inst id=136 core=0
+x86.end_inst id=135 core=0
+x86.end_inst id=134 core=0
+x86.end_inst id=133 core=0
+x86.end_inst id=132 core=0
+x86.end_inst id=131 core=0
+x86.end_inst id=130 core=0
+x86.end_inst id=129 core=0
+x86.end_inst id=128 core=0
+x86.end_inst id=127 core=0
+x86.end_inst id=126 core=0
+x86.end_inst id=125 core=0
+x86.end_inst id=124 core=0
+x86.end_inst id=123 core=0
+x86.end_inst id=122 core=0
+x86.end_inst id=121 core=0
+x86.end_inst id=120 core=0
+x86.end_inst id=119 core=0
+x86.end_inst id=118 core=0
+x86.end_inst id=117 core=0
+x86.end_inst id=116 core=0
+x86.end_inst id=115 core=0
+x86.end_inst id=114 core=0
+x86.end_inst id=113 core=0
+x86.end_inst id=112 core=0
+x86.end_inst id=111 core=0
+x86.end_inst id=110 core=0
+x86.end_inst id=109 core=0
+x86.end_inst id=108 core=0
+x86.end_inst id=107 core=0
+x86.end_inst id=106 core=0
+x86.end_inst id=105 core=0
+x86.end_inst id=104 core=0
+x86.end_inst id=103 core=0
+x86.end_inst id=102 core=0
+x86.end_inst id=101 core=0
+x86.end_inst id=100 core=0
+x86.end_inst id=99 core=0
+x86.end_inst id=98 core=0
+x86.end_inst id=97 core=0
+x86.end_inst id=96 core=0
+x86.end_inst id=95 core=0
+x86.end_inst id=94 core=0
+x86.end_inst id=93 core=0
+x86.end_inst id=92 core=0
+x86.end_inst id=91 core=0
+x86.end_inst id=90 core=0
+x86.end_inst id=89 core=0
+x86.end_inst id=88 core=0
+x86.end_inst id=87 core=0
+x86.end_inst id=86 core=0
+x86.inst id=76 core=0 stg="co"
+x86.inst id=77 core=0 stg="co"
+x86.inst id=78 core=0 stg="co"
+x86.inst id=79 core=0 stg="wb"
+x86.inst id=82 core=0 stg="wb"
+x86.inst id=83 core=0 stg="i"
+x86.new_inst id=156 core=0 spec="t" asm="test   al,0xa" uasm="and zps,cf,of/eax" stg="fe"
+x86.new_inst id=157 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+mem.new_access name="A-11" type="load" state="x86-l1-0:load" addr=0x7980
+mem.new_access name="A-12" type="store" state="x86-l1-0:store" addr=0x1ff0
+mem.access name="A-11" state="x86-l1-0:load_lock"
+mem.access name="A-6" state="x86-mm:write_request_receive"
+mem.access name="A-12" state="x86-l1-0:store_lock"
+mem.access name="A-6" state="x86-mm:find_and_lock"
+mem.access name="A-6" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-6" set=127 way=15
+c clk=272
+x86.end_inst id=76 core=0
+x86.end_inst id=77 core=0
+x86.end_inst id=78 core=0
+x86.inst id=79 core=0 stg="co"
+x86.inst id=80 core=0 stg="co"
+x86.inst id=81 core=0 stg="co"
+x86.inst id=82 core=0 stg="co"
+x86.new_inst id=158 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+mem.access name="A-6" state="x86-mm:find_and_lock_action"
+mem.access name="A-6" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=127 way=15 tag=0x1fc0 state="E"
+mem.new_access name="A-13" type="store" state="x86-l1-0:store" addr=0x1fec
+mem.access name="A-6" state="x86-mm:write_request_action"
+mem.access name="A-6" state="x86-mm:invalidate"
+mem.access name="A-6" state="x86-mm:invalidate_finish"
+mem.access name="A-6" state="x86-mm:write_request_exclusive"
+mem.access name="A-6" state="x86-mm:write_request_updown"
+mem.access name="A-6" state="x86-mm:write_request_updown_finish"
+mem.set_sharer dir="x86-mm" x=127 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=127 y=15 z=0 owner=0
+mem.set_block cache="x86-mm" set=127 way=15 tag=0x1fc0 state="E"
+mem.end_access_block cache="x86-mm" access="A-6" set=127 way=15
+c clk=273
+x86.end_inst id=79 core=0
+x86.end_inst id=80 core=0
+x86.end_inst id=81 core=0
+x86.end_inst id=82 core=0
+x86.inst id=83 core=0 stg="wb"
+x86.new_inst id=159 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=274
+x86.inst id=83 core=0 stg="co"
+x86.inst id=84 core=0 stg="co"
+x86.inst id=85 core=0 stg="co"
+x86.new_inst id=160 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+mem.new_access name="A-14" type="store" state="x86-l1-0:store" addr=0x1f8c
+mem.access name="A-14" state="x86-l1-0:store_lock"
+c clk=275
+x86.end_inst id=83 core=0
+x86.end_inst id=84 core=0
+x86.end_inst id=85 core=0
+x86.new_inst id=161 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=276
+x86.new_inst id=162 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=277
+x86.new_inst id=163 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=278
+x86.new_inst id=164 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=279
+x86.new_inst id=165 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=280
+x86.new_inst id=166 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=281
+x86.new_inst id=167 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=282
+x86.new_inst id=168 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=283
+x86.new_inst id=169 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=284
+x86.new_inst id=170 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=285
+x86.new_inst id=171 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=286
+x86.new_inst id=172 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=287
+x86.new_inst id=173 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=288
+x86.new_inst id=174 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=289
+x86.new_inst id=175 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=290
+x86.new_inst id=176 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=291
+x86.new_inst id=177 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=292
+x86.new_inst id=178 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=293
+x86.new_inst id=179 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=294
+x86.new_inst id=180 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=295
+x86.new_inst id=181 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=296
+x86.new_inst id=182 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=297
+x86.new_inst id=183 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=298
+x86.new_inst id=184 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=299
+x86.new_inst id=185 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=300
+x86.new_inst id=186 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=301
+x86.new_inst id=187 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=302
+x86.new_inst id=188 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=303
+x86.new_inst id=189 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=304
+x86.new_inst id=190 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=305
+x86.new_inst id=191 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=306
+x86.new_inst id=192 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=307
+x86.new_inst id=193 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=308
+x86.new_inst id=194 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=309
+x86.new_inst id=195 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=310
+x86.new_inst id=196 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=311
+x86.new_inst id=197 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=312
+x86.new_inst id=198 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=313
+x86.new_inst id=199 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=314
+x86.new_inst id=200 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=315
+x86.new_inst id=201 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=316
+x86.new_inst id=202 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=317
+x86.new_inst id=203 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=318
+x86.new_inst id=204 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=319
+x86.new_inst id=205 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=320
+x86.new_inst id=206 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=321
+x86.new_inst id=207 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=322
+x86.new_inst id=208 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=323
+x86.new_inst id=209 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=324
+x86.new_inst id=210 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=325
+x86.new_inst id=211 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=326
+x86.new_inst id=212 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=327
+x86.new_inst id=213 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=328
+x86.new_inst id=214 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=329
+x86.new_inst id=215 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=330
+x86.new_inst id=216 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=331
+x86.new_inst id=217 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=332
+x86.new_inst id=218 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=333
+x86.new_inst id=219 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=334
+x86.new_inst id=220 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=335
+x86.new_inst id=221 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=336
+x86.new_inst id=222 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=337
+x86.new_inst id=223 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=338
+x86.new_inst id=224 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=339
+x86.new_inst id=225 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=340
+x86.new_inst id=226 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=341
+x86.new_inst id=227 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=342
+x86.new_inst id=228 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=343
+x86.new_inst id=229 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=344
+x86.new_inst id=230 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=345
+x86.new_inst id=231 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=346
+x86.new_inst id=232 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=347
+x86.new_inst id=233 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=348
+x86.new_inst id=234 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=349
+x86.new_inst id=235 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=350
+x86.new_inst id=236 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=351
+x86.new_inst id=237 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=352
+x86.new_inst id=238 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=353
+x86.new_inst id=239 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=354
+x86.new_inst id=240 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=355
+x86.new_inst id=241 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=356
+x86.new_inst id=242 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=357
+x86.new_inst id=243 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=358
+x86.new_inst id=244 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=359
+x86.new_inst id=245 core=0 spec="t" asm="" uasm="nop -/-" stg="fe"
+c clk=372
+mem.access name="A-6" state="x86-mm:write_request_reply"
+c clk=376
+mem.access name="A-6" state="x86-l2:write_request_finish"
+mem.access name="A-6" state="x86-l2:write_request_updown_finish"
+mem.set_sharer dir="x86-l2" x=63 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=63 y=3 z=0 owner=0
+mem.set_block cache="x86-l2" set=63 way=3 tag=0x1fc0 state="E"
+mem.end_access_block cache="x86-l2" access="A-6" set=63 way=3
+c clk=386
+mem.access name="A-6" state="x86-l2:write_request_reply"
+c clk=390
+mem.access name="A-6" state="x86-l1-0:write_request_finish"
+mem.access name="A-6" state="x86-l1-0:store_unlock"
+mem.set_block cache="x86-l1-0" set=15 way=1 tag=0x1fc0 state="M"
+mem.end_access_block cache="x86-l1-0" access="A-6" set=15 way=1
+c clk=391
+mem.access name="A-6" state="x86-l1-0:store_finish"
+mem.end_access name="A-6"
+mem.access name="A-7" state="x86-l1-0:load_lock"
+mem.access name="A-7" state="x86-l1-0:find_and_lock"
+mem.access name="A-7" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-7" set=12 way=1
+mem.access name="A-7" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-7" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-7" state="x86-l1-0:load_action"
+mem.access name="A-7" state="x86-l1-0:read_request"
+c clk=395
+mem.access name="A-7" state="x86-l2:read_request_receive"
+mem.access name="A-7" state="x86-l2:find_and_lock"
+mem.access name="A-7" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-7" set=28 way=3
+mem.access name="A-7" state="x86-l2:find_and_lock_action"
+mem.access name="A-7" state="x86-l2:find_and_lock_finish"
+mem.access name="A-7" state="x86-l2:read_request_action"
+mem.access name="A-7" state="x86-l2:read_request_updown"
+mem.access name="A-7" state="x86-l2:read_request"
+c clk=399
+mem.access name="A-7" state="x86-mm:read_request_receive"
+mem.access name="A-7" state="x86-mm:find_and_lock"
+mem.access name="A-7" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-7" set=28 way=15
+c clk=400
+mem.access name="A-7" state="x86-mm:find_and_lock_action"
+mem.access name="A-7" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=28 way=15 tag=0x700 state="E"
+mem.access name="A-7" state="x86-mm:read_request_action"
+mem.access name="A-7" state="x86-mm:read_request_updown"
+mem.access name="A-7" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=28 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=28 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=28 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-7" set=28 way=15
+c clk=500
+mem.access name="A-7" state="x86-mm:read_request_reply"
+c clk=504
+mem.access name="A-7" state="x86-l2:read_request_finish"
+mem.access name="A-7" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=28 way=3 tag=0x700 state="E"
+mem.access name="A-7" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=28 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=28 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=28 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-7" set=28 way=3
+c clk=514
+mem.access name="A-7" state="x86-l2:read_request_reply"
+c clk=518
+mem.access name="A-7" state="x86-l1-0:read_request_finish"
+mem.access name="A-7" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=12 way=1 tag=0x700 state="E"
+mem.access name="A-7" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-7" set=12 way=1
+c clk=519
+mem.access name="A-7" state="x86-l1-0:load_finish"
+mem.end_access name="A-7"
+mem.access name="A-8" state="x86-l1-0:store_lock"
+mem.access name="A-8" state="x86-l1-0:find_and_lock"
+mem.access name="A-8" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-8" set=15 way=1
+mem.access name="A-8" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-8" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-8" state="x86-l1-0:store_action"
+mem.access name="A-8" state="x86-l1-0:store_unlock"
+mem.set_block cache="x86-l1-0" set=15 way=1 tag=0x1fc0 state="M"
+mem.end_access_block cache="x86-l1-0" access="A-8" set=15 way=1
+c clk=520
+mem.access name="A-8" state="x86-l1-0:store_finish"
+mem.end_access name="A-8"
+mem.access name="A-9" state="x86-l1-0:load_lock"
+mem.access name="A-9" state="x86-l1-0:find_and_lock"
+mem.access name="A-9" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-9" set=5 way=1
+mem.access name="A-9" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-9" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-9" state="x86-l1-0:load_action"
+mem.access name="A-9" state="x86-l1-0:read_request"
+c clk=524
+mem.access name="A-9" state="x86-l2:read_request_receive"
+mem.access name="A-9" state="x86-l2:find_and_lock"
+mem.access name="A-9" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-9" set=37 way=3
+mem.access name="A-9" state="x86-l2:find_and_lock_action"
+mem.access name="A-9" state="x86-l2:find_and_lock_finish"
+mem.access name="A-9" state="x86-l2:read_request_action"
+mem.access name="A-9" state="x86-l2:read_request_updown"
+mem.access name="A-9" state="x86-l2:read_request"
+c clk=528
+mem.access name="A-9" state="x86-mm:read_request_receive"
+mem.access name="A-9" state="x86-mm:find_and_lock"
+mem.access name="A-9" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-9" set=485 way=15
+c clk=529
+mem.access name="A-9" state="x86-mm:find_and_lock_action"
+mem.access name="A-9" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=485 way=15 tag=0x7940 state="E"
+mem.access name="A-9" state="x86-mm:read_request_action"
+mem.access name="A-9" state="x86-mm:read_request_updown"
+mem.access name="A-9" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=485 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=485 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=485 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-9" set=485 way=15
+c clk=629
+mem.access name="A-9" state="x86-mm:read_request_reply"
+c clk=633
+mem.access name="A-9" state="x86-l2:read_request_finish"
+mem.access name="A-9" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=37 way=3 tag=0x7940 state="E"
+mem.access name="A-9" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=37 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=37 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=37 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-9" set=37 way=3
+c clk=643
+mem.access name="A-9" state="x86-l2:read_request_reply"
+c clk=647
+mem.access name="A-9" state="x86-l1-0:read_request_finish"
+mem.access name="A-9" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=5 way=1 tag=0x7940 state="E"
+mem.access name="A-9" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-9" set=5 way=1
+c clk=648
+mem.access name="A-9" state="x86-l1-0:load_finish"
+mem.end_access name="A-9"
+mem.access name="A-10" state="x86-l1-0:store_lock"
+mem.access name="A-10" state="x86-l1-0:find_and_lock"
+mem.access name="A-10" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-10" set=15 way=1
+mem.access name="A-10" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-10" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-10" state="x86-l1-0:store_action"
+mem.access name="A-10" state="x86-l1-0:store_unlock"
+mem.set_block cache="x86-l1-0" set=15 way=1 tag=0x1fc0 state="M"
+mem.end_access_block cache="x86-l1-0" access="A-10" set=15 way=1
+c clk=649
+mem.access name="A-10" state="x86-l1-0:store_finish"
+mem.end_access name="A-10"
+mem.access name="A-11" state="x86-l1-0:load_lock"
+mem.access name="A-11" state="x86-l1-0:find_and_lock"
+mem.access name="A-11" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-11" set=6 way=1
+mem.access name="A-11" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-11" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-11" state="x86-l1-0:load_action"
+mem.access name="A-11" state="x86-l1-0:read_request"
+c clk=653
+mem.access name="A-11" state="x86-l2:read_request_receive"
+mem.access name="A-11" state="x86-l2:find_and_lock"
+mem.access name="A-11" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-11" set=38 way=3
+mem.access name="A-11" state="x86-l2:find_and_lock_action"
+mem.access name="A-11" state="x86-l2:find_and_lock_finish"
+mem.access name="A-11" state="x86-l2:read_request_action"
+mem.access name="A-11" state="x86-l2:read_request_updown"
+mem.access name="A-11" state="x86-l2:read_request"
+c clk=657
+mem.access name="A-11" state="x86-mm:read_request_receive"
+mem.access name="A-11" state="x86-mm:find_and_lock"
+mem.access name="A-11" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-11" set=486 way=15
+c clk=658
+mem.access name="A-11" state="x86-mm:find_and_lock_action"
+mem.access name="A-11" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=486 way=15 tag=0x7980 state="E"
+mem.access name="A-11" state="x86-mm:read_request_action"
+mem.access name="A-11" state="x86-mm:read_request_updown"
+mem.access name="A-11" state="x86-mm:read_request_updown_finish"
+mem.set_owner dir="x86-mm" x=486 y=15 z=0 owner=-1
+mem.set_sharer dir="x86-mm" x=486 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=486 y=15 z=0 owner=0
+mem.end_access_block cache="x86-mm" access="A-11" set=486 way=15
+c clk=758
+mem.access name="A-11" state="x86-mm:read_request_reply"
+c clk=762
+mem.access name="A-11" state="x86-l2:read_request_finish"
+mem.access name="A-11" state="x86-l2:read_request_updown_miss"
+mem.set_block cache="x86-l2" set=38 way=3 tag=0x7980 state="E"
+mem.access name="A-11" state="x86-l2:read_request_updown_finish"
+mem.set_owner dir="x86-l2" x=38 y=3 z=0 owner=-1
+mem.set_sharer dir="x86-l2" x=38 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=38 y=3 z=0 owner=0
+mem.end_access_block cache="x86-l2" access="A-11" set=38 way=3
+c clk=772
+mem.access name="A-11" state="x86-l2:read_request_reply"
+c clk=776
+mem.access name="A-11" state="x86-l1-0:read_request_finish"
+mem.access name="A-11" state="x86-l1-0:load_miss"
+mem.set_block cache="x86-l1-0" set=6 way=1 tag=0x7980 state="E"
+mem.access name="A-11" state="x86-l1-0:load_unlock"
+mem.end_access_block cache="x86-l1-0" access="A-11" set=6 way=1
+c clk=777
+mem.access name="A-11" state="x86-l1-0:load_finish"
+mem.end_access name="A-11"
+mem.access name="A-12" state="x86-l1-0:store_lock"
+mem.access name="A-12" state="x86-l1-0:find_and_lock"
+mem.access name="A-12" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-12" set=15 way=1
+mem.access name="A-12" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-12" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-12" state="x86-l1-0:store_action"
+mem.access name="A-12" state="x86-l1-0:store_unlock"
+mem.set_block cache="x86-l1-0" set=15 way=1 tag=0x1fc0 state="M"
+mem.end_access_block cache="x86-l1-0" access="A-12" set=15 way=1
+c clk=778
+mem.access name="A-12" state="x86-l1-0:store_finish"
+mem.end_access name="A-12"
+mem.access name="A-13" state="x86-l1-0:store_finish"
+mem.end_access name="A-13"
+mem.access name="A-14" state="x86-l1-0:store_lock"
+mem.access name="A-14" state="x86-l1-0:find_and_lock"
+mem.access name="A-14" state="x86-l1-0:find_and_lock_port"
+mem.new_access_block cache="x86-l1-0" access="A-14" set=14 way=1
+mem.access name="A-14" state="x86-l1-0:find_and_lock_action"
+mem.access name="A-14" state="x86-l1-0:find_and_lock_finish"
+mem.access name="A-14" state="x86-l1-0:store_action"
+mem.access name="A-14" state="x86-l1-0:write_request"
+c clk=782
+mem.access name="A-14" state="x86-l2:write_request_receive"
+mem.access name="A-14" state="x86-l2:find_and_lock"
+mem.access name="A-14" state="x86-l2:find_and_lock_port"
+mem.new_access_block cache="x86-l2" access="A-14" set=62 way=3
+mem.access name="A-14" state="x86-l2:find_and_lock_action"
+mem.access name="A-14" state="x86-l2:find_and_lock_finish"
+mem.access name="A-14" state="x86-l2:write_request_action"
+mem.access name="A-14" state="x86-l2:invalidate"
+mem.access name="A-14" state="x86-l2:invalidate_finish"
+mem.access name="A-14" state="x86-l2:write_request_exclusive"
+mem.access name="A-14" state="x86-l2:write_request_updown"
+mem.access name="A-14" state="x86-l2:write_request"
+c clk=786
+mem.access name="A-14" state="x86-mm:write_request_receive"
+mem.access name="A-14" state="x86-mm:find_and_lock"
+mem.access name="A-14" state="x86-mm:find_and_lock_port"
+mem.new_access_block cache="x86-mm" access="A-14" set=126 way=15
+c clk=787
+mem.access name="A-14" state="x86-mm:find_and_lock_action"
+mem.access name="A-14" state="x86-mm:find_and_lock_finish"
+mem.set_block cache="x86-mm" set=126 way=15 tag=0x1f80 state="E"
+mem.access name="A-14" state="x86-mm:write_request_action"
+mem.access name="A-14" state="x86-mm:invalidate"
+mem.access name="A-14" state="x86-mm:invalidate_finish"
+mem.access name="A-14" state="x86-mm:write_request_exclusive"
+mem.access name="A-14" state="x86-mm:write_request_updown"
+mem.access name="A-14" state="x86-mm:write_request_updown_finish"
+mem.set_sharer dir="x86-mm" x=126 y=15 z=0 sharer=0
+mem.set_owner dir="x86-mm" x=126 y=15 z=0 owner=0
+mem.set_block cache="x86-mm" set=126 way=15 tag=0x1f80 state="E"
+mem.end_access_block cache="x86-mm" access="A-14" set=126 way=15
+c clk=887
+mem.access name="A-14" state="x86-mm:write_request_reply"
+c clk=891
+mem.access name="A-14" state="x86-l2:write_request_finish"
+mem.access name="A-14" state="x86-l2:write_request_updown_finish"
+mem.set_sharer dir="x86-l2" x=62 y=3 z=0 sharer=0
+mem.set_owner dir="x86-l2" x=62 y=3 z=0 owner=0
+mem.set_block cache="x86-l2" set=62 way=3 tag=0x1f80 state="E"
+mem.end_access_block cache="x86-l2" access="A-14" set=62 way=3
+c clk=901
+mem.access name="A-14" state="x86-l2:write_request_reply"
+c clk=905
+mem.access name="A-14" state="x86-l1-0:write_request_finish"
+mem.access name="A-14" state="x86-l1-0:store_unlock"
+mem.set_block cache="x86-l1-0" set=14 way=1 tag=0x1f80 state="M"
+mem.end_access_block cache="x86-l1-0" access="A-14" set=14 way=1
+c clk=906
+mem.access name="A-14" state="x86-l1-0:store_finish"
+mem.end_access name="A-14"
