@@ -54,7 +54,7 @@ void Scatter(Graph & G){
 
 /* This is specialized for "in"? */
 void Gather(Graph & G){
-	BitonicSort_i(G); 
+	BitonicSort_General(int arr[], int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
 	int agg = 1;
 	for(int i =0; i<M; i++)
 	{

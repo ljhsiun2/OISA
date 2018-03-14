@@ -2,7 +2,7 @@
 #include "../benchmarks/primitives/path_oram/oram.h"
 
 int main(){
-	Init_ORAM(32, 11, 1, 50); // what is bucket size and C again?
+	Init_ORAM(32, 11, 1, 50, 1); // what is bucket size and C again?
 	// just use argc if you dont hardcode 
 	int* arr = (int*) malloc(sizeof(int)*11*1);
 	int i=0;
@@ -21,5 +21,6 @@ int main(){
 		printf("best value: %d \n", best);
 	}
 	printf("Largest int found: %d \n", best);
+	free(arr);
 	return 0;
 }

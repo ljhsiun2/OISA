@@ -2,6 +2,7 @@
 
 import numpy
 import os
+import sys
 import contextlib
 from collections import deque
 from datetime import datetime
@@ -10,7 +11,6 @@ from datetime import datetime
 MULTI2SIM_PATH = "~/projects/research/multi2sim/bin/m2s"
 CUR_DIR = os.getcwd() + "/"
 
-# TODO: put your executable here
 EXECUTABLE_NAME = "find_max"
 
 EXECUTABLE      = CUR_DIR + EXECUTABLE_NAME
@@ -20,6 +20,22 @@ DISASM_FILE     = CUR_DIR + "disasm"
 EXE_INSTR_FILE  = CUR_DIR + "debug_isa.no_sim_flag"
 
 MAKE_OPTIONS = "static"
+
+
+class Unbuffered(object):
+    def __init__(self, stream):
+        self.stream = stream
+    def write(self, data):
+        self.stream.write(data)
+        self.stream.flush()
+    def writelines(self, data):
+        self.stream.writelines(data)
+        self.stream.flush()
+    def __getattr__(self, attr):
+        return getattr(self.stream, attr)
+
+
+sys.stdout = Unbuffered(sys.stdout)
 
 
 def compileProgram():
@@ -45,12 +61,12 @@ def executeProgram(param):
     ## Generate debug isa file
     with contextlib.suppress(FileNotFoundError):
         os.remove(EXE_INSTR_FILE)
-    os.system(MULTI2SIM_PATH + " --x86-debug-isa " + EXE_INSTR_FILE + " " + EXECUTABLE + " " + param)
+    os.system(MULTI2SIM_PATH + " --x86-config x86_config.ini --mem-config mem_config.ini --x86-debug-isa " + EXE_INSTR_FILE + " " + EXECUTABLE + " " + param)
 
     ## Generate trace file
     with contextlib.suppress(FileNotFoundError):
         os.remove(TRACE_PACKAGE)
-    os.system(MULTI2SIM_PATH + " --x86-sim detailed --trace " + TRACE_PACKAGE + " " + EXECUTABLE + " " + param)
+    os.system(MULTI2SIM_PATH + " --x86-config x86_config.ini --mem-config mem_config.ini --x86-sim detailed --trace " + TRACE_PACKAGE + " " + EXECUTABLE + " " + param)
 
     ## Uncompress the generated .gz trace package
     with contextlib.suppress(FileNotFoundError):
@@ -59,9 +75,9 @@ def executeProgram(param):
     os.system("rm " + TRACE_PACKAGE)
 
 
-def calcCommitTime():
+def calcCommitTime(param):
 
-    print ("=== Calculate commit time ===")
+    print ("=== Calculate commit time at ", str(datetime.now()), " ===")
 
     ## Record all starting address of all function from Disassembly file
     func_list = []
@@ -70,7 +86,7 @@ def calcCommitTime():
         for line in disasm:
             if '<' in line and '>' in line:
                 func = line[line.find('<')+1 : line.find('>')]
-                if MAKE_OPTIONS == "dynamic" or (func == "main" or func[0].isupper()): 
+                if MAKE_OPTIONS == "dynamic" or func == "main" or func[0].isupper():
                     func_list.append(func)
                     entrance = int(line.split()[0], 16)
                     entrance_func_map[entrance] = func
@@ -85,14 +101,12 @@ def calcCommitTime():
         for line in exe_instr_file:
             instr = ((line[line.find(':')+1:]).split('(')[0]).strip()
             addr = int((line.split()[2])[:-1], 16)
-
-            if record_target_addr:  # if last instr is call, the next instr pc is target addr
+            if record_target_addr:
                 record_target_addr = False
                 committed_instrs[-1][-2] = addr
-            if record_ret_addr:     # if last instr is ret, the next instr  pc is ret addr
+            if record_ret_addr:
                 record_ret_addr = False
                 committed_instrs[-1][-1] = addr
-
             if "call" in instr:
                 num_calls = num_calls + 1
                 record_target_addr = True
@@ -196,33 +210,46 @@ def calcCommitTime():
     for func, time in func_time.items():
         total_cycles = total_cycles + time
 
-    func_percent = {}
-    for func, time in func_time.items():
-        func_percent[func] = float(time) / total_cycles
+    profile_name = "output_" + param.replace(' ', '_') + ".txt"
+    with open(profile_name, "a") as output: 
+        for func, time in sorted(func_time.items(), key=lambda x: x[1], reverse=True):
+            percent = float(time) / total_cycles * 100
+            output.write(func + " : " + str(percent) + "% = " + str(time) + " cycles\n")
 
-    # print (func_time)
-    for func, percent in func_percent.items():
-        print (func, ":", percent * 100, "%")
+        # for i in transit_stack:
+            # output.write(str(i)+"\n")
+
+        output.write("======== end =========\n")
 
     # print ("where main happens: ", committed_instrs[87019][2])
     # print ("where all end: ", committed_instrs[-1][2])
 
 
+######################################################################
+##
+##      Put your test code here
+##
+######################################################################
 compileProgram()
-# for N in [5,10,20,40,80]:
-    # for B in [1,2,4,8]:
-        # for C in [10,20,40,80,160,320]:
-            # print("========================================")
-            # print("||          Z = 4                     ||")
-            # print("||          N =", N, "\t              ||")
-            # print("||          B =", B, "\t              ||")
-            # print("||          C =", C, "\t              ||")
-            # print("========================================")
-            # executeProgram(str(N) + " " + str(B) + " " + str(C))
+# for N in [2**8, 2**11, 2**14, 2**17, 2**20]:
+    # for B in [1, 128, 1024]:
+        # for sort_code in [0, 1]:
+            # with open("output.txt", "a") as output:
+                # sort_scheme = 'MERGE_SORT' if sort_code == 0 else 'BITONIC_SORT'
+
+                # output.write("\n\n=============================================\n")
+                # output.write("||               Z = 4                        ||\n")
+                # output.write("||               C = 200                      ||\n")
+                # output.write("||               N = " + str(N) + "\t              ||\n")
+                # output.write("||               B = " + str(B) + "\t              ||\n")
+                # output.write("||     Sort Scheme = " + sort_scheme + "      ||\n")
+                # output.write("=============================================\n")
+
+            # executeProgram(str(N) + " " + str(B) + " " + str(sort_code))
             # calcCommitTime()
-# TODO: put the arguments here
-executeProgram("")
-calcCommitTime()
+param = ""
+executeProgram(param)
+calcCommitTime(param)
 
 
 
