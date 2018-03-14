@@ -1,9 +1,9 @@
-#include <vector>
-#include <tuple>
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include "benchmarks/primitives/path_oram/oram.h"
+#include "benchmarks/primitives/sort/sort.h"
 
-using namespace std;
-#define M 15 // imagine a simple directed graph w/ 5 nodes
+#define M 60 // imagine a simple directed graph w/ 20 nodes
 #define K 5	// what is K tho? num of vertices?
 
 /* TODO:
@@ -12,8 +12,20 @@ using namespace std;
 	-- clean up struct stuff? maybe?
 	-- Figure out K
 	-- Figure out osort
-	heyyyyy 90% done 
+	-- Make it into C so it plays nice with generalSort
+	heyyyyy 95% done 
 	*/
+
+typedef struct Graph_t{
+
+} Graph;
+
+typedef struct tuple_t{
+	int vertex;
+	int edge;
+	bool isVertex;
+	struct data;
+} tuple;
 
 typedef struct data_t{
 	// vertex values; PR and degree of it
@@ -36,12 +48,12 @@ int Fg(int e_data, int u_data){
 }
 
 int Fa(data v_data){
-	return ((.15/v_data.PR)+ .85*v_data.agg); 	// DOUBLE CHECK THIS
+	return ((.15/v_data.PR)+ .85*v_data.agg); 
 }
 
 /* This is specialized for "out"? */
 void Scatter(Graph & G){
-	BitonicSort_i(G);
+	BitonicSort_General(int arr[], int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
 	data tempVal;
 	for(int i = 0; i<M; i++)
 	{
@@ -60,7 +72,7 @@ void Gather(Graph & G){
 	{
 		if(get<2>(G[i]))
 		{
-			get<3>(G[i]).agg = agg; // what is || operation
+			get<3>(G[i]).agg = agg; // what is || operation, concat?
 			agg = 1;				// default?
 		}
 		else
@@ -88,6 +100,8 @@ int main(){
 	1) Fill G
 	2) Give each vertex initial v.data.PR = 1/|V|
 	*/
-	Graph G;
+	struct tuple_t G[60];
+	for(int i = 0; i<60; i++)
+		G[i] = (struct tuple_t) malloc(sizeof(tuple_t));
 	computePageRank(G);
 }

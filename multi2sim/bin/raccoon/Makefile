@@ -1,6 +1,6 @@
 benchmarks:
 	gcc -std=c99 ../benchmarks/primitives/lib/misc.c ../benchmarks/primitives/sort/bitonic_sort.c \
-	 ../benchmarks/primitives/path_oram/oram.c ../benchmarks/primitives/sort/merge_sort.c find_max.c -m32 -o find_max \
+	 ../benchmarks/primitives/path_oram/oram.c ../benchmarks/primitives/sort/merge_sort.c ofind_max.c -m32 -o ofind_max \
 	 && gcc -std=c99 ../benchmarks/primitives/lib/misc.c ../benchmarks/primitives/sort/bitonic_sort.c \
 	../benchmarks/primitives/path_oram/oram.c ../benchmarks/primitives/sort/merge_sort.c binary_search.c -m32 -o binary_search
 
