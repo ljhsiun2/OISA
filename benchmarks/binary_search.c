@@ -1,28 +1,28 @@
 #include <stdio.h>
-#include "../benchmarks/primitives/path_oram/oram.h"
+//#include "../benchmarks/primitives/path_oram/oram.h"
 
 int main(){
-	Init_ORAM(32, 11, 1, 50, 1);
+//	Init_ORAM(32, 11, 1, 50, 1);
 	int* arr = (int*) malloc(sizeof(int)*11*1);
 	for(int i = 0; i<10; i++)
 	{
 		arr[i] = i;
-		Access_ORAM(WRITE, i, arr+i);
+//		Access_ORAM(WRITE, i, arr+i);
 		printf("Arr value at i: %d\n", arr[i]);
 	}
 
 	int l=0, r = 9, search=3; // search = search element
 	int m;
 	int tempVal;
-	while(l<=r)
+	while(l<=r) // what do here as well
 	{
 		m = l+(r-l)/2;
-		printf("pre-Value in m: %d\n", m);
-		Access_ORAM(READ, m, &tempVal);
-				printf("post-Value in m: %d\n", m);
+//		printf("pre-Value in m: %d\n", m);
+//		Access_ORAM(READ, m, &tempVal);
+//				printf("post-Value in m: %d\n", m);
 
 		if(tempVal == search)
-			break;
+			break; //what do here
 
 		if(tempVal < search)
 			l = m+1;
