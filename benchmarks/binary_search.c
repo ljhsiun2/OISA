@@ -6,7 +6,7 @@
 int main(){
 //	Init_ORAM(32, 11, 1, 50, 1);
 	int* arr = (int*) malloc(sizeof(int)*11*1);
-	for(int i = 0; i<10; i++)
+	for(int i = 0; i<16; i++)
 	{
 		arr[i] = i;
 //		Access_ORAM(WRITE, i, arr+i);

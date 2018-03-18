@@ -20,6 +20,8 @@ typedef struct tuple_t{
 	int vertex;
 	int edge;
 	int isVertex;
+
+	// insert data struct below
 	int PR; // initialized for all Vertices to have 1/|V|
 	int num_edges;
 	int agg;
@@ -28,14 +30,9 @@ typedef struct tuple_t{
 	int edge_weight;
 } tuple;
 
-typedef struct data_t{
-	// vertex values; PR and degree of it
-
-} data;
-
 //typedef vector<tuple<int, int, bool, data> > Graph;
 
-int Fs(struct data_t* u_data){
+int Fs(struct tuple_t* u_data){
 	return (u_data->PR/u_data->num_edges);
 }
 
@@ -43,20 +40,20 @@ int Fg(int e_data, int u_data){
 	return e_data + u_data;
 }
 
-int Fa(struct data_t* v_data){
+int Fa(struct tuple_t* v_data){
 	return ((.15/v_data->PR)+ .85*v_data->agg); 
 }
 
 /* This is specialized for "out"? */
 void Scatter(struct tuple_t** G){
 	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/sizeof(int), 0, 1, 2, 1);
-	struct data_t* tempVal;
+	struct tuple_t* tempVal;
 	for(int i = 0; i<M; i++)
 	{
 		if(G[i]->isVertex)
-			tempVal = G[i]->data;
+			tempVal = G[i];
 		else
-			G[i]->data->edge_weight = Fs(tempVal);
+			G[i]->edge_weight = Fs(tempVal);
 	}
 }
 
@@ -68,17 +65,17 @@ void Gather(struct tuple_t** G){
 	{
 		if(G[i]->isVertex)
 		{
-			G[i]->data->agg = agg; // what is || operation, concat?
+			G[i]->agg = agg; // what is || operation, concat?
 			agg = 1;				// default?
 		}
 		else
-			agg = Fg(agg, G[i]->data->agg);
+			agg = Fg(agg, G[i]->agg);
 	}
 }
 
 void Apply(struct tuple_t** G){
 	for(int i =0; i<M; i++)
-		G[i]->data->PR = Fa(G[i]->data);
+		G[i]->PR = Fa(G[i]);
 }
 
 void computePageRank(struct tuple_t** G){
@@ -98,14 +95,9 @@ int main(){
 	*/
 	struct tuple_t* G[M];
 	for(int i = 0; i<M; i++)
-	{
 		G[i] = malloc(sizeof(struct tuple_t));
-		G[i]->data = malloc(sizeof(struct data_t));
-	}
+
 	computePageRank(G);
 	for(int i=0; i<M; i++)
-	{
-		free(G[i]->data);
 		free(G[i]);
-	}
 }
