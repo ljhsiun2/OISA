@@ -16,21 +16,24 @@ int main(){
 
     int m1 = MEAN_1;
     int m2 = MEAN_2;
-    int prev_m1, prev_m2, temp1, temp2;
+    int prev_m1=0, prev_m2=0, temp, temp2;
     int i, j, k;
 
     while((m1 != prev_m1)&&(m2 != prev_m2))
     {
 
-        prev_m1 = m1;
-        prev_m2 = m2;
+
         i=0, j=0, k=0;
         for(i=0; i<INIT_SIZE; i++)
         {
-            temp1 = abs(c0[i] - m1);
+            temp = abs(c0[i] - m1);
             temp2 = abs(c0[i] - m2);
 
-            if(temp1 < temp2)
+           // printf("Temp 1 val: %d\n", temp);
+           // printf("Temp 2 val: %d\n", temp2);
+           // printf("Contents of c0: %d\n", c0[i]);
+
+            if(temp < temp2)
             {
                 c1[j] = c0[i];
                 j++;
@@ -42,15 +45,18 @@ int main(){
             }
         }
 
+        temp = 0;
         for(i = 0; i<j; i++)
-            temp2 = temp2+c1[i];
-        m1 = temp2/j;
+            temp = temp+c1[i];
+        m1 = temp/j;
+
+        temp2 = 0;
         for(i = 0; i<k; i++)
             temp2 = temp2+c2[i];
         m2 = temp2/k;
 
         printf("\n C1: ");
-        for(i = 0; i<k; i++)
+        for(i = 0; i<j; i++)
             printf("%d ", c1[i]);
         printf("\n mean 1: %d", m1);
 
@@ -58,9 +64,11 @@ int main(){
         for(i = 0; i<k; i++)
             printf("%d ", c2[i]);
         printf("\n mean 2: %d", m2);
+
+        prev_m1 = m1;
+        prev_m2 = m2;
     }
 
-    printf("I have no idea what I'm doing but here's some garbage");
-
+    printf("\nI have no idea what I'm doing but here's some garbage\n");
     return 0;
 }
