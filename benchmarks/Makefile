@@ -1,18 +1,16 @@
+PATHS = ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
+	 ../multi2sim/bin/benchmarks/primitives/lib/misc.c ../multi2sim/bin/benchmarks/primitives/lib/asm.c\
+	 ../multi2sim/bin/benchmarks/primitives/sort/merge_sort.c ../multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c
+
 all:
 	gcc -std=c99 ofind_max.c ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
 	 ../multi2sim/bin/benchmarks/primitives/lib/misc.c ../multi2sim/bin/benchmarks/primitives/lib/asm.c ../multi2sim/bin/benchmarks/primitives/sort/merge_sort.c\
 	 ../multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c -Wall -o ofind_max
 
 benchmarks:
-	gcc -std=c99 ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
-	 ../multi2sim/bin/benchmarks/primitives/lib/misc.c ../multi2sim/bin/benchmarks/primitives/lib/asm.c\
-	 ../multi2sim/bin/benchmarks/primitives/sort/merge_sort.c ../multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c ofind_max.c -m32 -o ofind_max \
-	 && gcc -std=c99 ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
-	 ../multi2sim/bin/benchmarks/primitives/lib/misc.c ../multi2sim/bin/benchmarks/primitives/lib/asm.c\
-	 ../multi2sim/bin/benchmarks/primitives/sort/merge_sort.c ../multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c binary_search.c -m32 -o binary_search\
-	 && gcc -std=c99 ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
-	 ../multi2sim/bin/benchmarks/primitives/lib/misc.c ../multi2sim/bin/benchmarks/primitives/lib/asm.c\
-	 ../multi2sim/bin/benchmarks/primitives/sort/merge_sort.c ../multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c pagerank2.c -m32 -o pagerank
+	gcc -std=c99 $(PATHS) ofind_max.c -m32 -o ofind_max \
+	 && gcc -std=c99 $(PATHS) binary_search.c -m32 -o binary_search\
+	 && gcc -std=c99 $(PATHS) pagerank2.c -m32 -o pagerank
 
 debug:
 	gcc -std=c99 ofind_max.c ../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c ../multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
