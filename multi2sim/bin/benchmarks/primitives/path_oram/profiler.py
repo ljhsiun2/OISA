@@ -11,7 +11,7 @@ from datetime import datetime
 MULTI2SIM_PATH = "/home/jiyongy2/OISA_SIM/multi2sim/bin/m2s"
 CUR_DIR = os.getcwd() + "/"
 
-EXECUTABLE_NAME = "oram"
+EXECUTABLE_NAME = "path_oram"
 
 EXECUTABLE      = CUR_DIR + EXECUTABLE_NAME
 TRACE_PACKAGE   = CUR_DIR + "trace.gz"
@@ -247,9 +247,10 @@ compileProgram()
 
             # executeProgram(str(N) + " " + str(B) + " " + str(sort_code))
             # calcCommitTime()
-param = "131072 1024 0"
-executeProgram(param)
-calcCommitTime(param)
 
+# param = "1048576 128 0"
+# param = ""
+# executeProgram(param)
+# calcCommitTime(param)
 
 

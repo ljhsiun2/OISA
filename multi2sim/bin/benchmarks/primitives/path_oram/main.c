@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "oram.h"
+#include "path_oram.h"
+#include "../lib/defs.h"
 #include "../lib/misc.h"
 
 /*void test(){*/
-    /*int Z = 2;      // bucket size */
-    /*int N = 2;     // num_real_blocks*/
+    /*int Z = 4;      // bucket size */
+    /*int N = 4;      // num_real_blocks*/
     /*int B = 2;      // block size*/
     /*int C = 8;      // C*/
 
@@ -103,37 +104,56 @@ int main(int argc, char** argv){
     int B = atoi(argv[2]);
     int sort_scheme = atoi(argv[3]);
 
-    int num_access = 3;
+    int num_access = 10;
     assert(num_access <= N);
- 
+
+    Func_Time_Measure_Begin();
     if (sort_scheme == MERGE_SORT)
         Init_ORAM(Z, N, B, C, MERGE_SORT);
     else if (sort_scheme == BITONIC_SORT)
         Init_ORAM(Z, N, B, C, BITONIC_SORT);
     else {
-        printf("\n\n !!! ERROR: Unrecognized Sorting Scheme. \n\n");
+        fprintf(stderr, "\n\n !!! ERROR: Unrecognized Sorting Scheme. \n\n");
         assert (0);
     }
+    dprintf("@@@Init finish.\n");
 
     int* wr_data = (int*)malloc(sizeof(int) * 2 * num_access * B);
     for (int i = 0; i < 2 * num_access * B; i++)
         wr_data[i] = i;
 
-    for (int i = 0; i < num_access; i++)
+    for (int i = 0; i < num_access; i++){
+        dprintf("@@@ Access #%d\n", i);
         Access_ORAM(WRITE, i, wr_data + i * B);
+    }
 
     int* rd_data = (int*)malloc(sizeof(int) * B);
     for (int i = 0; i < num_access; i++){
         Access_ORAM(READ, i, rd_data);
         for (int j = 0; j < B; j++){
-            printf("%d, ", rd_data[j]);
+            dprintf("%d, ", rd_data[j]);
         }
-        printf("\n");
+        dprintf("\n");
+    }
+
+    for (int i = 0; i < num_access; i++){
+        dprintf("@@@ Access #%d\n", i);
+        Access_ORAM(WRITE, i, wr_data + i * B + num_access * B);
+    }
+
+    for (int i = 0; i < num_access; i++){
+        Access_ORAM(READ, i, rd_data);
+        for (int j = 0; j < B; j++){
+            dprintf("%d, ", rd_data[j]);
+        }
+        dprintf("\n");
     }
 
     Free_ORAM();
     free(wr_data);
     free(rd_data);
+
+    Print_Func_Time_Stats();
 
     return 0;
 }

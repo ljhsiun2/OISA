@@ -1,3 +1,4 @@
+.nfs*
 debug_isa*
 trace*
 disasm

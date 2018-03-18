@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../benchmarks/primitives/path_oram/oram.h"
+#include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 
 #define Z 32
 #define N 11

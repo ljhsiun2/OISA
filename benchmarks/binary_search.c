@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 //#include "../benchmarks/primitives/path_oram/oram.h"
 
 int main(){
@@ -31,6 +33,7 @@ int main(){
 	}
 
 	printf("Element found at index %d \n", m);
+	free(arr);
 	//int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 	return 0;
 }

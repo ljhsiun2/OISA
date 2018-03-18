@@ -83,3 +83,4 @@ int * k_means(double** data, int n, int m, int k, double t, double** centroids) 
     free(counts);
 
     return labels;
+}

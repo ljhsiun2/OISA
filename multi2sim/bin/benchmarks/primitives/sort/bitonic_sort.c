@@ -9,12 +9,13 @@
 #include <stdio.h>
 #include "sort.h"
 
-static int key1_idx;
-static int key2_idx;
+static int _key_idx;
+static int _key1_idx;
+static int _key2_idx;
 
-static int block_sz = -1;
-static int block_sz_main = -1;
-static int block_sz_aux  = -1;
+static int _block_sz = -1;
+static int _block_sz_main = -1;
+static int _block_sz_aux  = -1;
 
 static inline void oswap(int *a, int *b, int if_swap){
     __asm__ __volatile__ (  "movl (%0), %%eax\n\t"
@@ -47,26 +48,36 @@ static void CompAndSwap_Int(int arr[], int i, int j, int dir){
     oswap(&arr[i], &arr[j], if_swap);
 }
 static void CompAndSwap_Block(int arr[], int i, int j, int dir){
-    int act_dir = (arr[i*block_sz] > arr[j*block_sz]);
+    int act_dir = (arr[i*_block_sz+_key_idx] > arr[j*_block_sz+_key_idx]);
     int if_swap = (dir == act_dir);
-    for (int k = 0; k < block_sz; k++)
-        oswap(&arr[i*block_sz]+k, &arr[j*block_sz]+k, if_swap);
+    for (int k = 0; k < _block_sz; k++)
+        oswap(&arr[i*_block_sz]+k, &arr[j*_block_sz]+k, if_swap);
 }
 static void CompAndSwap_General(int arr[], int i, int j, int dir1, int dir2){
-    int act_dir1 = (arr[i*block_sz+key1_idx] > arr[j*block_sz+key1_idx]);
-    int dir1_eq = (arr[i*block_sz+key1_idx] == arr[j*block_sz+key1_idx]);
-    int act_dir2 = (arr[i*block_sz+key2_idx] > arr[j*block_sz+key2_idx]);
+    int dir1_eq  = (arr[i*_block_sz+_key1_idx] == arr[j*_block_sz+_key1_idx]);
+    int act_dir1 = (arr[i*_block_sz+_key1_idx] >  arr[j*_block_sz+_key1_idx]);
+    int act_dir2 = (arr[i*_block_sz+_key2_idx] >  arr[j*_block_sz+_key2_idx]);
     int if_swap = ((!dir1_eq) && (act_dir1 == dir1)) || ((dir1_eq) && (act_dir2 == dir2));
-    for (int k = 0; k < block_sz; k++)
-        oswap(&arr[i*block_sz]+k, &arr[j*block_sz]+k, if_swap);
+    for (int k = 0; k < _block_sz; k++)
+        oswap(&arr[i*_block_sz]+k, &arr[j*_block_sz]+k, if_swap);
 }
 static void CompAndSwap_TwoArray(int arr_main[], int arr_aux[], int i, int j, int dir){
-    int act_dir = (arr_main[i*block_sz_main] > arr_main[j*block_sz_main]);
+    int act_dir = (arr_main[i*_block_sz_main+_key_idx] > arr_main[j*_block_sz_main+_key_idx]);
     int if_swap = (dir == act_dir);
-    for (int k = 0; k < block_sz_main; k++)
-        oswap(&arr_main[i*block_sz_main]+k, &arr_main[j*block_sz_main]+k, if_swap);
-    for (int k = 0; k < block_sz_aux; k++)
-        oswap(&arr_aux[i*block_sz_aux]+k, &arr_aux[j*block_sz_aux]+k, if_swap);
+    for (int k = 0; k < _block_sz_main; k++)
+        oswap(&arr_main[i*_block_sz_main]+k, &arr_main[j*_block_sz_main]+k, if_swap);
+    for (int k = 0; k < _block_sz_aux; k++)
+        oswap(&arr_aux[i*_block_sz_aux]+k, &arr_aux[j*_block_sz_aux]+k, if_swap);
+}
+static void CompAndSwap_TwoArray_TwoKey(int arr_main[], int arr_aux[], int i, int j, int dir1, int dir2){
+    int dir1_eq  = (arr_main[i*_block_sz_main+_key1_idx] == arr_main[j*_block_sz_main+_key1_idx]);
+    int act_dir1 = (arr_main[i*_block_sz_main+_key1_idx] >  arr_main[j*_block_sz_main+_key1_idx]);
+    int act_dir2 = (arr_main[i*_block_sz_main+_key2_idx] >  arr_main[j*_block_sz_main+_key2_idx]);
+    int if_swap = ((!dir1_eq) && (act_dir1 == dir1)) || ((dir1_eq) && (act_dir2 == dir2));
+    for (int k = 0; k < _block_sz_main; k++)
+        oswap(&arr_main[i*_block_sz_main]+k, &arr_main[j*_block_sz_main]+k, if_swap);
+    for (int k = 0; k < _block_sz_aux; k++)
+        oswap(&arr_aux[i*_block_sz_aux]+k, &arr_aux[j*_block_sz_aux]+k, if_swap);
 }
 
 
@@ -108,6 +119,15 @@ static void BitonicMerge_TwoArray(int arr_main[], int arr_aux[], int low, int cn
         BitonicMerge_TwoArray(arr_main, arr_aux, low+k, k, dir);
     }
 }
+static void BitonicMerge_TwoArray_TwoKey(int arr_main[], int arr_aux[], int low, int cnt, int dir1, int dir2){
+    if (cnt > 1){
+        int k = cnt / 2;
+        for (int i=low; i<low + k; i++)
+            CompAndSwap_TwoArray_TwoKey(arr_main, arr_aux, i, i+k, dir1, dir2);
+        BitonicMerge_TwoArray_TwoKey(arr_main, arr_aux, low, k, dir1, dir2);
+        BitonicMerge_TwoArray_TwoKey(arr_main, arr_aux, low+k, k, dir1, dir2);
+    }
+}
 
 
 /// Function: Subroutine: sort
@@ -143,6 +163,14 @@ static void BitonicSubSort_TwoArray(int arr_main[], int arr_aux[], int low, int 
         BitonicMerge_TwoArray(arr_main, arr_aux, low, cnt, dir);
     }
 }
+static void BitonicSubSort_TwoArray_TwoKey(int arr_main[], int arr_aux[], int low, int cnt, int dir1, int dir2){
+    if (cnt > 1){
+        int k = cnt / 2;
+        BitonicSubSort_TwoArray_TwoKey(arr_main, arr_aux, low, k, 1, 1);
+        BitonicSubSort_TwoArray_TwoKey(arr_main, arr_aux, low+k, k, 0, 0);
+        BitonicMerge_TwoArray_TwoKey(arr_main, arr_aux, low, cnt, dir1, dir2);
+    }
+}
 
 
 /// Callable functions. Currently three versions
@@ -153,24 +181,34 @@ void BitonicSort_Int(int arr[], int N, int dir){
     BitonicSubSort_Int(arr, 0, N, dir);
 }
 
-void BitonicSort_Block(int arr[], int N, int dir, int _block_sz){
-    block_sz = _block_sz;
+void BitonicSort_Block(int arr[], int N, int key_idx, int dir, int block_sz){
+    _key_idx = key_idx;
+    _block_sz = block_sz;
     checkPowerOfTwo(N);
     BitonicSubSort_Block(arr, 0, N, dir);
 }
 
-void BitonicSort_General(int arr[], int N, int _block_sz, int _key1_idx, int dir1, int _key2_idx, int dir2){
-    key1_idx = _key1_idx;
-    key2_idx = _key2_idx;
-    block_sz = _block_sz;
+void BitonicSort_General(int arr[], int N, int block_sz, int key1_idx, int dir1, int key2_idx, int dir2){
+    _key1_idx = key1_idx;
+    _key2_idx = key2_idx;
+    _block_sz = block_sz;
     checkPowerOfTwo(N);
     BitonicSubSort_General(arr, 0, N, dir1, dir2);
 }
 
-void BitonicSort_TwoArray(int arr_main[], int arr_aux[], int N, int dir, int _block_sz_main, int _block_sz_aux){
-    block_sz_main = _block_sz_main;
-    block_sz_aux  = _block_sz_aux;
+void BitonicSort_TwoArray(int arr_main[], int arr_aux[], int N, int key_idx, int dir, int block_sz_main, int block_sz_aux){
+    _key_idx = key_idx;
+    _block_sz_main = block_sz_main;
+    _block_sz_aux  = block_sz_aux;
     checkPowerOfTwo(N);
     BitonicSubSort_TwoArray(arr_main, arr_aux, 0, N, dir);
 }
 
+void BitonicSort_TwoArray_TwoKey(int arr_main[], int arr_aux[], int N, int key1_idx, int dir1, int key2_idx, int dir2, int block_sz_main, int block_sz_aux){
+    _key1_idx = key1_idx;
+    _key2_idx = key2_idx;
+    _block_sz_main = block_sz_main;
+    _block_sz_aux  = block_sz_aux;
+    checkPowerOfTwo(N);
+    BitonicSubSort_TwoArray_TwoKey(arr_main, arr_aux, 0, N, dir1, dir2);
+}

@@ -24,7 +24,7 @@ void Graph::addEdge(int u, int v, int w){
 }
 
 void Graph::findPath(int u){
-	priority_queue< pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > my_pq;
+	priority_queue< pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > my_pq; // uhhhh how do i pq
 
 	vector<int> dist(8, INT_MAX);
  

@@ -1,17 +1,11 @@
 #include "misc.h"
 
-uint64_t rdtsc(void){
-    uint32_t hi, lo;
-    __asm__ __volatile__ (  "rdtsc"
-                            : "=a"(lo), "=d"(hi)
-            );
-    return ( (uint64_t)lo | (((uint64_t)hi) << 32) );
-}
-
 unsigned int log_2(unsigned int val){
+    val = (val << 1) - 1;
     unsigned int result = 0;
     while (val>>=1)
         result ++;
+
     return result;
 }
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "benchmarks/primitives/path_oram/oram.h"
-#include "benchmarks/primitives/sort/sort.h"
+#include "../multi2sim/bin/benchmarks/primitives/path_oram/oram.h"
+#include "../multi2sim/bin/benchmarks/primitives/sort/sort.h"
 
 #define M 60 // imagine a simple directed graph w/ 20 nodes
 #define K 5	// what is K tho? num of vertices?
@@ -37,7 +37,7 @@ typedef struct data_t{
 	int edge_weight;
 } data;
 
-typedef vector<tuple<int, int, bool, data> > Graph;
+//typedef vector<tuple<int, int, bool, data> > Graph;
 
 int Fs(data u_data){
 	return (u_data.PR/u_data.num_edges);
@@ -53,7 +53,7 @@ int Fa(data v_data){
 
 /* This is specialized for "out"? */
 void Scatter(Graph & G){
-	BitonicSort_General(int arr[], int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
+	BitonicSort_General(G, int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
 	data tempVal;
 	for(int i = 0; i<M; i++)
 	{
@@ -66,7 +66,7 @@ void Scatter(Graph & G){
 
 /* This is specialized for "in"? */
 void Gather(Graph & G){
-	BitonicSort_General(int arr[], int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
+	BitonicSort_General(G, int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
 	int agg = 1;
 	for(int i =0; i<M; i++)
 	{
@@ -100,8 +100,8 @@ int main(){
 	1) Fill G
 	2) Give each vertex initial v.data.PR = 1/|V|
 	*/
-	struct tuple_t G[60];
-	for(int i = 0; i<60; i++)
+	struct tuple_t G[M];
+	for(int i = 0; i<M; i++)
 		G[i] = (struct tuple_t) malloc(sizeof(tuple_t));
 	computePageRank(G);
 }
