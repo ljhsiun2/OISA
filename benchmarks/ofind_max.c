@@ -29,7 +29,7 @@ int main(){
 	for(i = 0; i<10; i++)
 	{
 		arr[i] = i;
-		Access_ORAM(WRITE, i, arr+i);
+		//Access_ORAM(WRITE, i, arr+i);
 		printf("Arr value at i: %d\n", arr[i]);
 	}
 
