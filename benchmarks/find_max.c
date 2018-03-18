@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 //#include "../benchmarks/primitives/path_oram/oram.h"
 
 int main(){
