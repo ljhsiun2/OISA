@@ -3,8 +3,9 @@
 //#include "../multi2sim/bin/benchmarks/primitives/path_oram/oram.h"
 
 #define MAT_SIZE 10
+#define NUM_LAYERS 5
 
-int matrix_mul(int* m1, int* m2){
+int dot_prod(int* m1, int* m2){
 	
 	int retVal = 0;
 	for(int i=0; i<MAT_SIZE; i++)
@@ -27,12 +28,21 @@ int main(){
 									8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
 									9, 9, 9, 9, 9, 9, 9, 9, 9, 9};
 	int arr3[MAT_SIZE];
-	for(int i =0; i<MAT_SIZE; i++)
+	for(int wat = 0; wat < NUM_LAYERS; wat++)
 	{
-		arr3[i] = matrix_mul(arr1, arr2[i]);
-		printf("Value in element %d: %d\n", i, arr3[i]);
-	}
-	
+		for(int i =0; i<MAT_SIZE; i++)
+		{
+			arr3[i] = dot_prod(arr1, arr2[i]);
+			
+		}
+		printf("Values in layer %d: ", wat);
+		for(int i =0; i <MAT_SIZE; i++)
+		{
+			printf("%d ", arr3[i]);
+			arr1[i] = arr3[i];
+		}
+		printf("\n");
+	}	
 
 
 	return 0;
