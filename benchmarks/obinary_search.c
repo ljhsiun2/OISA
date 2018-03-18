@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 
-#define Z 32
+#define Z 4
 #define N 11
 #define B 1
 #define C 50
@@ -39,7 +39,7 @@ int main(){
 	int m;
 	int tempVal;
 	int flag = 0;
-	while(!flag) // what do here as well
+	for(int i =0; i<log16; i++) // what do here as well
 	{
 		m = l+(r-l)/2;
 		printf("pre-Value in m: %d\n", m);

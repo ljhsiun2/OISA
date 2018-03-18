@@ -21,8 +21,6 @@ int main(){
 
     while((m1 != prev_m1)&&(m2 != prev_m2))
     {
-
-
         i=0, j=0, k=0;
         for(i=0; i<INIT_SIZE; i++)
         {

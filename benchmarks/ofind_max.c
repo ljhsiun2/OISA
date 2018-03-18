@@ -21,7 +21,6 @@ static inline void cmovn(int cond, int* src_ptr, int* dst_ptr, int sz){
 
 int main(){
 	printf("starting program\n");
-	Init_ORAM(32, 10, 1, 50, 1); // what is bucket size and C again?
 	// just use argc if you dont hardcode 
 	int* arr = (int*) malloc(sizeof(int)*10*1);
 	int i=0;
@@ -36,7 +35,6 @@ int main(){
 	for(i=0; i<10; i++)
 	{
 		cmov((best < arr[i]), &arr[i], &best);
-			//Access_ORAM(READ, i, &best);
 		printf("best value: %d \n", best);
 	}
 	printf("Largest int found: %d \n", best);

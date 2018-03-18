@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 #include "../multi2sim/bin/benchmarks/primitives/sort/sort.h"
 
@@ -17,25 +16,21 @@
 	heyyyyy 95% done 
 	*/
 
-typedef struct Graph_t{
-
-} Graph;
-
 typedef struct tuple_t{
 	int vertex;
 	int edge;
-	bool isVertex;
-	struct data_t* data;
-} tuple;
-
-typedef struct data_t{
-	// vertex values; PR and degree of it
+	int isVertex;
 	int PR; // initialized for all Vertices to have 1/|V|
 	int num_edges;
 	int agg;
 
 	// "value of weighted contribution of PageRank of outgoing vertex u" idk lol
 	int edge_weight;
+} tuple;
+
+typedef struct data_t{
+	// vertex values; PR and degree of it
+
 } data;
 
 //typedef vector<tuple<int, int, bool, data> > Graph;
@@ -54,7 +49,7 @@ int Fa(struct data_t* v_data){
 
 /* This is specialized for "out"? */
 void Scatter(struct tuple_t** G){
-	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/4, 0, 1, 2, 1);
+	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/sizeof(int), 0, 1, 2, 1);
 	struct data_t* tempVal;
 	for(int i = 0; i<M; i++)
 	{

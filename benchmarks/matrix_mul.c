@@ -16,13 +16,11 @@ int main(){
 		for(int j=0; j<5; j++)
 		{
 
-			Access_ORAM(WRITE, i, arr1+j*i+i);
-			Access_ORAM(WRITE, j, arr2+j*i+i);
-			Access_ORAM(WRITE, i*j, arr3+j*i+i);
+			
 
-			/*arr1[i*(j+1)] = j;
+			arr1[i*(j+1)] = j;
 			arr2[i*(j+1)] = i;
-			arr3[i*(j+1)] = arr1[i*(j+1)] * arr2[i*(j+1)];*/
+			arr3[i*(j+1)] = arr1[i*(j+1)] * arr2[i*(j+1)];
 			printf("%d, ", arr3[i*(j+1)]);
 		}
 		printf("\n");
