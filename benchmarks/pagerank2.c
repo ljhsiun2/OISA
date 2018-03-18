@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../multi2sim/bin/benchmarks/primitives/path_oram/oram.h"
+#include <stdbool.h>
+#include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 #include "../multi2sim/bin/benchmarks/primitives/sort/sort.h"
 
 #define M 60 // imagine a simple directed graph w/ 20 nodes
@@ -24,7 +25,7 @@ typedef struct tuple_t{
 	int vertex;
 	int edge;
 	bool isVertex;
-	struct data;
+	struct data_t* data;
 } tuple;
 
 typedef struct data_t{
@@ -39,53 +40,53 @@ typedef struct data_t{
 
 //typedef vector<tuple<int, int, bool, data> > Graph;
 
-int Fs(data u_data){
-	return (u_data.PR/u_data.num_edges);
+int Fs(struct data_t* u_data){
+	return (u_data->PR/u_data->num_edges);
 }
 
 int Fg(int e_data, int u_data){
 	return e_data + u_data;
 }
 
-int Fa(data v_data){
-	return ((.15/v_data.PR)+ .85*v_data.agg); 
+int Fa(struct data_t* v_data){
+	return ((.15/v_data->PR)+ .85*v_data->agg); 
 }
 
 /* This is specialized for "out"? */
-void Scatter(Graph & G){
-	BitonicSort_General(G, int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
-	data tempVal;
+void Scatter(struct tuple_t** G){
+	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/4, 0, 1, 2, 1);
+	struct data_t* tempVal;
 	for(int i = 0; i<M; i++)
 	{
-		if(get<2>(G[i]))
-			tempVal = get<3>(G[i]);
+		if(G[i]->isVertex)
+			tempVal = G[i]->data;
 		else
-			get<3>(G[i]).edge_weight = Fs(tempVal);
+			G[i]->data->edge_weight = Fs(tempVal);
 	}
 }
 
 /* This is specialized for "in"? */
-void Gather(Graph & G){
-	BitonicSort_General(G, int N, int _block_sz, int _key1_idx, int _dir1, int _key2_idx, int _dir2);
+void Gather(struct tuple_t** G){
+	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/4, 1, 1, 2, 0);
 	int agg = 1;
 	for(int i =0; i<M; i++)
 	{
-		if(get<2>(G[i]))
+		if(G[i]->isVertex)
 		{
-			get<3>(G[i]).agg = agg; // what is || operation, concat?
+			G[i]->data->agg = agg; // what is || operation, concat?
 			agg = 1;				// default?
 		}
 		else
-			agg = Fg(agg, get<3>(G[i]).agg);
+			agg = Fg(agg, G[i]->data->agg);
 	}
 }
 
-void Apply(Graph & G){
+void Apply(struct tuple_t** G){
 	for(int i =0; i<M; i++)
-		get<3>(G[i]).PR = Fa(get<3>(G[i]));
+		G[i]->data->PR = Fa(G[i]->data);
 }
 
-void computePageRank(Graph & G){
+void computePageRank(struct tuple_t** G){
 	for(int i =0; i<K; i++)
 	{
 		Scatter(G);
@@ -98,10 +99,18 @@ int main(){
 
 	/* Initialization steps:
 	1) Fill G
-	2) Give each vertex initial v.data.PR = 1/|V|
+	2) Give each vertex initial v->data.PR = 1/|V|
 	*/
-	struct tuple_t G[M];
+	struct tuple_t* G[M];
 	for(int i = 0; i<M; i++)
-		G[i] = (struct tuple_t) malloc(sizeof(tuple_t));
+	{
+		G[i] = malloc(sizeof(struct tuple_t));
+		G[i]->data = malloc(sizeof(struct data_t));
+	}
 	computePageRank(G);
+	for(int i=0; i<M; i++)
+	{
+		free(G[i]->data);
+		free(G[i]);
+	}
 }

@@ -1,86 +1,66 @@
 #include <stdlib.h>
-#include <assert.h>
+#include <stdio.h>
 #include <float.h>
 #include <math.h>
 
-int * k_means(double** data, int n, int m, int k, double t, double** centroids) {
-    /* output cluster label for each data point */
-    int * labels = (int * ) calloc(n, sizeof(int));
+#define INIT_SIZE 10
+#define MEAN_1 17
+#define MEAN_2 8
 
-    int h, i, j; /* loop counters, of course :) */
-    int * counts = (int * ) calloc(k, sizeof(int)); /* size of each cluster */
-    double old_error, error = DBL_MAX; /* sum of squared euclidean distance */
-    double * * c = centroids ? centroids : (double * * ) calloc(k, sizeof(double * ));
-    double * * c1 = (double * * ) calloc(k, sizeof(double * )); /* temp centroids */
 
-    assert(data && k > 0 && k <= n && m > 0 && t >= 0); /* for debugging */
+int main(){
+    int c0[INIT_SIZE] = {1, 2, 13, 4, 9, 6, 10, 2, 4}; 
+    // arbitrary array; use argc if you wanna use your own damned arrays
+    int c1[INIT_SIZE];
+    int c2[INIT_SIZE];
 
-    /****
-     ** initialization */
+    int m1 = MEAN_1;
+    int m2 = MEAN_2;
+    int prev_m1, prev_m2, temp1, temp2;
+    int i, j, k;
 
-    for (h = i = 0; i < k; h += n / k, i++) {
-        c1[i] = (double * ) calloc(m, sizeof(double));
-        if (!centroids) {
-            c[i] = (double * ) calloc(m, sizeof(double));
-        }
-        /* pick k points as initial centroids */
-        for (j = m; j-- > 0; c[i][j] = data[h][j]);
-    }
+    while((m1 != prev_m1)&&(m2 != prev_m2))
+    {
 
-    /****
-     ** main loop */
+        prev_m1 = m1;
+        prev_m2 = m2;
+        i=0, j=0, k=0;
+        for(i=0; i<INIT_SIZE; i++)
+        {
+            temp1 = abs(c0[i] - m1);
+            temp2 = abs(c0[i] - m2);
 
-    do {
-        /* save error from last step */
-        old_error = error, error = 0;
-
-        /* clear old counts and temp centroids */
-        for (i = 0; i < k; counts[i++] = 0) {
-            for (j = 0; j < m; c1[i][j++] = 0);
-        }
-
-        for (h = 0; h < n; h++) {
-            /* identify the closest cluster */
-            double min_distance = DBL_MAX;
-            for (i = 0; i < k; i++) {
-                double distance = 0;
-                for (j = m; j-- > 0; distance += pow(data[h][j] - c[i][j], 2));
-                if (distance < min_distance) {
-                    labels[h] = i;
-                    min_distance = distance;
-                }
+            if(temp1 < temp2)
+            {
+                c1[j] = c0[i];
+                j++;
             }
-            /* update size and temp centroid of the destination cluster */
-            for (j = m; j-- > 0; c1[labels[h]][j] += data[h][j]);
-            counts[labels[h]]++;
-            /* update standard error */
-            error += min_distance;
-        }
-
-        for (i = 0; i < k; i++) { /* update all centroids */
-            for (j = 0; j < m; j++) {
-                c[i][j] = counts[i] ? c1[i][j] / counts[i] : c1[i][j];
+            else
+            {
+                c2[k] = c0[i];
+                k++;
             }
         }
 
-    } while (fabs(error - old_error) > t);
+        for(i = 0; i<j; i++)
+            temp2 = temp2+c1[i];
+        m1 = temp2/j;
+        for(i = 0; i<k; i++)
+            temp2 = temp2+c2[i];
+        m2 = temp2/k;
 
-    /****
-     ** housekeeping */
+        printf("\n C1: ");
+        for(i = 0; i<k; i++)
+            printf("%d ", c1[i]);
+        printf("\n mean 1: %d", m1);
 
-    for (i = 0; i < k; i++) {
-        if (!centroids) {
-            free(c[i]);
-        }
-        free(c1[i]);
+        printf("\n C2: ");
+        for(i = 0; i<k; i++)
+            printf("%d ", c2[i]);
+        printf("\n mean 2: %d", m2);
     }
 
-    if (!centroids) {
-        free(c);
-    }
-    free(c1);
+    printf("I have no idea what I'm doing but here's some garbage");
 
-    free(counts);
-
-    return labels;
+    return 0;
 }

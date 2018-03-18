@@ -249,8 +249,8 @@ compileProgram()
             # calcCommitTime()
 
 # param = "1048576 128 0"
-# param = ""
-# executeProgram(param)
-# calcCommitTime(param)
+param = ""
+executeProgram(param)
+calcCommitTime(param)
 
 
