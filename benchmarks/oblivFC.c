@@ -1,18 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "../multi2sim/bin/benchmarks/primitives/path_oram/oram.h"
+#include "/home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 
 #define MAT_SIZE 10
 #define NUM_LAYERS 5
 
+static inline void cmov(int cond, int* src_ptr, int* dst_ptr){
+    __asm__ __volatile__ (  "movl (%2), %%eax\n\t"
+                            "testl %0, %0\n\t"
+                            "cmovnel (%1), %%eax\n\t"
+                            "movl %%eax, (%2)"
+                            :
+                            : "b" (cond), "c" (src_ptr), "d" (dst_ptr)
+                            : "cc", "%eax", "memory"
+            );
+}
+
 int dot_prod(int* m1, int* m2){
 	
+	int temp = 0;
 	int retVal = 0;
 	for(int i=0; i<MAT_SIZE; i++)
 	{
-		retVal += m1[i]*m2[i];
+		temp += m1[i]*m2[i];
 	}
-	return (retVal < 0) ? 0 : retVal; // cmov
+	cmov((temp > 0), &temp, &retVal);
+	return retVal;
 }
 
 int main(){

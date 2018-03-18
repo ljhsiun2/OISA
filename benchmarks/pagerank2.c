@@ -3,7 +3,7 @@
 #include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 #include "../multi2sim/bin/benchmarks/primitives/sort/sort.h"
 
-#define M 60 // imagine a simple directed graph w/ 20 nodes
+#define M 64 // imagine a simple directed graph w/ 20 nodes
 #define K 5	// what is K tho? num of vertices?
 
 /* TODO:
@@ -17,8 +17,8 @@
 	*/
 
 typedef struct tuple_t{
-	int vertex;
-	int edge;
+	int src;
+	int dst;
 	int isVertex;
 
 	// insert data struct below
@@ -89,13 +89,33 @@ void computePageRank(struct tuple_t** G){
 
 int main(){
 
-	/* Initialization steps:
+	/* Initialization steps for a simple graph:
 	1) Fill G
 	2) Give each vertex initial v->data.PR = 1/|V|
 	*/
 	struct tuple_t* G[M];
 	for(int i = 0; i<M; i++)
+	{
 		G[i] = malloc(sizeof(struct tuple_t));
+		if(i < 20) //initializing the vertices
+		{
+			G[i]->src = i;
+			G[i]->dst = i;
+			G[i]->isVertex = 1;
+			G[i]->PR = .05;
+			G[i]->num_edges = 20;
+			G[i]->agg = 1;
+
+			G[20+i]->src = i;
+			G[20+i]->dst = i+1;
+			G[20+i]->isVertex = 0;
+		}
+		else
+		{
+			G[i]->src = i;
+		}
+	}	
+
 
 	computePageRank(G);
 	for(int i=0; i<M; i++)
