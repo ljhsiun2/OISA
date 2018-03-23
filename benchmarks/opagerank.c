@@ -3,7 +3,7 @@
 #include "../multi2sim/bin/benchmarks/primitives/path_oram/path_oram.h"
 #include "../multi2sim/bin/benchmarks/primitives/sort/sort.h"
 
-#define M 60 // imagine a simple directed graph w/ 20 nodes
+#define M 64 // imagine a simple directed graph w/ 20 nodes
 #define K 5	// what is K tho? num of vertices?
 
 /* TODO:
@@ -15,6 +15,17 @@
 	-- Make it into C so it plays nice with generalSort
 	heyyyyy 95% done 
 	*/
+
+static inline void cmov(int cond, int* src_ptr, int* dst_ptr){
+    __asm__ __volatile__ (  "movl (%2), %%eax\n\t"
+                            "testl %0, %0\n\t"
+                            "cmovnel (%1), %%eax\n\t"
+                            "movl %%eax, (%2)"
+                            :
+                            : "b" (cond), "c" (src_ptr), "d" (dst_ptr)
+                            : "cc", "%eax", "memory"
+            );
+}
 
 typedef struct tuple_t{
 	int src;
@@ -41,35 +52,45 @@ int Fg(int e_data, int u_data){
 }
 
 int Fa(struct tuple_t* v_data){
-	return ((.15/(M/3))+ .85*v_data->agg); 
+	return ((.15/v_data->PR)+ .85*v_data->agg); 
 }
 
 /* This is specialized for "out"? */
 void Scatter(struct tuple_t** G){
-	//BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/sizeof(int), 0, 1, 2, 1);
-	struct tuple_t* tempVal;
+	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/sizeof(int), 0, 1, 2, 1);
+	int tempVal;
 	for(int i = 0; i<M; i++)
 	{
-		if(G[i]->isVertex)
+		tempVal = Fs(G[i]);
+		cmov(G[i]->isVertex == 0, &tempVal, &(G[i]->edge_weight));
+		/*if(G[i]->isVertex)
 			tempVal = G[i];
 		else
-			G[i]->edge_weight = Fs(tempVal);
+			G[i]->edge_weight = Fs(tempVal);*/
 	}
 }
 
 /* This is specialized for "in"? */
 void Gather(struct tuple_t** G){
-	//BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/4, 1, 1, 2, 0);
-	int agg = 0;
+	BitonicSort_General((int*) G, M, sizeof(struct tuple_t)/4, 1, 1, 2, 0);
+	int agg = 1, reset = 1;
+	int tempVal;
 	for(int i =0; i<M; i++)
 	{
-		if(G[i]->isVertex)
+		tempVal = Fg(agg, G[i]->agg);
+		cmov(G[i]->isVertex, &agg, &(G[i]->agg));
+		
+		cmov(G[i]->isVertex == 0, &tempVal, &agg);
+		cmov(G[i]->isVertex == 0, &reset, &agg);
+
+		/*if(G[i]->isVertex)
 		{
 			G[i]->agg = agg; // what is || operation, concat?
-			agg = 0;				// default?
+			agg = 1;				// default?
 		}
 		else
-			agg = Fg(agg, G[i]->agg);
+			agg = Fg(agg, G[i]->agg);*/
+
 	}
 }
 
@@ -94,22 +115,21 @@ int main(){
 	2) Give each vertex initial v->data.PR = 1/|V|
 	*/
 	struct tuple_t* G[M];
-	int num_vertices = M/3;
 	for(int i = 0; i<M; i++)
 	{
 		G[i] = malloc(sizeof(struct tuple_t));
-		if(i < num_vertices) //initializing the vertices (from 0 to M/3)
+		if(i < 20) //initializing the vertices
 		{
 			G[i]->src = i;
 			G[i]->dst = i;
 			G[i]->isVertex = 1;
-			G[i]->PR = 1/(num_vertices);
-			G[i]->num_edges = num_vertices;
+			G[i]->PR = .05;
+			G[i]->num_edges = 20;
 			G[i]->agg = 1;
 
-			G[num_vertices+i]->src = i;
-			G[num_vertices+i]->dst = i+1;
-			G[num_vertices+i]->isVertex = 0;
+			G[20+i]->src = i;
+			G[20+i]->dst = i+1;
+			G[20+i]->isVertex = 0;
 		}
 		else
 		{
