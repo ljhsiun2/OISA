@@ -1,0 +1,29 @@
+[ General ]
+RealTime = 5.32 [s]
+SimEnd = ContextsFinished
+
+[ x86 ]
+RealTime = 5.32 [s]
+Instructions = 144911
+InstructionsPerSecond = 27263
+
+RealTime = 34.99 [s]
+SimEnd = ContextsFinished
+SimTime = 136950.58 [ns]
+Frequency = 3000 [MHz]
+Cycles = 411264
+
+[ x86 ]
+RealTime = 34.57 [s]
+Instructions = 374726
+InstructionsPerSecond = 10838
+SimTime = 136950.91 [ns]
+Frequency = 3000 [MHz]
+Cycles = 411264
+CyclesPerSecond = 11895
+FastForwardInstructions = 0
+CommittedInstructions = 144909
+CommittedInstructionsPerCycle = 0.3524
+CommittedMicroInstructions = 247657
+CommittedMicroInstructionsPerCycle = 0.6022
+BranchPredictionAccuracy = 0.8453
