@@ -41,8 +41,8 @@ int main()
       e += 128;
       k += 128;
     }
-    for (i = 0;i < 20;++i) printf(" %5lld",t[i + 1] - t[i]);
-    printf("\n");
+   // for (i = 0;i < 20;++i) printf(" %5lld",t[i + 1] - t[i]);
+   // printf("\n");
     fflush(stdout);
     for (i = 0;i < sizeof buf - 128;++i) i[(char *) buf] = i[128 + (char *) buf];
   }

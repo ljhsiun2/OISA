@@ -109,13 +109,13 @@ dev.raid.speed_limit_min = 1000
 dev.scsi.logging_level = 0
 fs.aio-max-nr = 65536
 fs.aio-nr = 0
-fs.dentry-state = 21470	6437	45	0	0	0
+fs.dentry-state = 25652	10213	45	0	0	0
 fs.dir-notify-enable = 1
 fs.epoll.max_user_watches = 819773
 fs.file-max = 398645
-fs.file-nr = 6336	0	398645
-fs.inode-nr = 20615	886
-fs.inode-state = 20615	886	0	0	0	0	0
+fs.file-nr = 6400	0	398645
+fs.inode-nr = 24506	884
+fs.inode-state = 24506	884	0	0	0	0	0
 fs.inotify.max_queued_events = 16384
 fs.inotify.max_user_instances = 128
 fs.inotify.max_user_watches = 8192
@@ -191,7 +191,7 @@ kernel.msgmnb = 16384
 kernel.msgmni = 32000
 kernel.ngroups_max = 65536
 kernel.nmi_watchdog = 0
-kernel.ns_last_pid = 4929
+kernel.ns_last_pid = 5209
 kernel.numa_balancing = 0
 kernel.numa_balancing_scan_delay_ms = 1000
 kernel.numa_balancing_scan_period_max_ms = 60000
@@ -218,14 +218,14 @@ kernel.printk_delay = 0
 kernel.printk_ratelimit = 5
 kernel.printk_ratelimit_burst = 10
 kernel.pty.max = 4096
-kernel.pty.nr = 24
+kernel.pty.nr = 25
 kernel.pty.reserve = 1024
 kernel.random.boot_id = 1c241ca5-cb37-478c-a380-8d3a677e2e7f
-kernel.random.entropy_avail = 925
+kernel.random.entropy_avail = 801
 kernel.random.poolsize = 4096
 kernel.random.read_wakeup_threshold = 64
 kernel.random.urandom_min_reseed_secs = 60
-kernel.random.uuid = 0223211b-dc7f-42b4-ba0b-ff217bf7d4a5
+kernel.random.uuid = 9b135384-a4ae-40dd-8025-ec85ba305c27
 kernel.random.write_wakeup_threshold = 896
 kernel.randomize_va_space = 2
 kernel.real-root-dev = 0
@@ -240,7 +240,7 @@ kernel.sched_domain.cpu0.domain0.forkexec_idx = 0
 kernel.sched_domain.cpu0.domain0.idle_idx = 1
 kernel.sched_domain.cpu0.domain0.imbalance_pct = 125
 kernel.sched_domain.cpu0.domain0.max_interval = 4
-kernel.sched_domain.cpu0.domain0.max_newidle_lb_cost = 2651524
+kernel.sched_domain.cpu0.domain0.max_newidle_lb_cost = 63374
 kernel.sched_domain.cpu0.domain0.min_interval = 2
 kernel.sched_domain.cpu0.domain0.name = DIE
 kernel.sched_domain.cpu0.domain0.newidle_idx = 0
@@ -253,7 +253,7 @@ kernel.sched_domain.cpu1.domain0.forkexec_idx = 0
 kernel.sched_domain.cpu1.domain0.idle_idx = 1
 kernel.sched_domain.cpu1.domain0.imbalance_pct = 125
 kernel.sched_domain.cpu1.domain0.max_interval = 4
-kernel.sched_domain.cpu1.domain0.max_newidle_lb_cost = 259087
+kernel.sched_domain.cpu1.domain0.max_newidle_lb_cost = 193138
 kernel.sched_domain.cpu1.domain0.min_interval = 2
 kernel.sched_domain.cpu1.domain0.name = DIE
 kernel.sched_domain.cpu1.domain0.newidle_idx = 0
@@ -897,19 +897,9 @@ GenuineIntel-000406e3-0fabfbff
 % echo _____; ./curve25519-speed; echo _____
 _____
 curve25519_athlon cpucycles_athlon
- 713272 447716 501374 525234 668360 674132 595330 456522 529334 665876 668226 591360 539626 448654 622334 539930 640894 448494 448854 546072
- 624708 609404 653410 623248 647014 703956 755190 640230 643822 811786 748700 644724 702618 642746 692696 665782 653170 746546 653618 690718
- 691624 770076 646668 685278 640468 973108 570558 682430 639934 732198 695514 680263 506124 602926 446892 505842 470386 452022 738032 642138
- 648374 699030 665480 717314 667124 695922 648562 683302 645370 711760 644914 891130 678138 494898 447520 476348 474502 545550 514858 595574
- 467318 683289 652014 692298 668452 704432 714720 767372 654872 712448 689834 678352 686294 647400 671876 714018 615756 554960 448196 494202
- 464374 447280 451246 689642 448404 463854 448584 557610 506058 552770 467914 450858 487074 561636 452014 449846 537750 476914 694272 665260
- 491926 703242 626292 510944 447364 447438 564112 449542 463736 451510 499246 566456 485640 522896 452082 451572 601906 472072 540870 449154
- 567030 446910 533482 450630 490408 476796 454604 451994 510792 574972 826646 594546 463152 448322 448762 520732 466776 454082 451568 495082
- 450068 448330 498234 555750 483930 538330 452468 454778 569010 537106 449178 463390 492778 453080 482614 454576 495656 453112 709116 889958
- 487360 447646 695046 642174 655238 755300 684662 647786 717564 697740 665416 641494 996732 485286 542564 450158 451752 466566 737774 582398
-134973136 cycles
-51378 usecs
-2627.060921 MHz
+102720704 cycles
+39631 usecs
+2591.928137 MHz
 _____
 % ./test-curve25519 | head -123456 | tail -1
 9d3dfa85e527852eff57fb0fc6b91630bc9d6df8813ddb3533202603cfad014f 3bac95275dd1778b5a281b732b0b97f272342f0935723117c82b158cf0bcb80c 8bf654e08b11bc1e52f3ff32a894f520aad71b7b710986a8bb8970389add5b5b
