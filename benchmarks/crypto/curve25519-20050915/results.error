@@ -1,0 +1,79 @@
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c: In function ‘Init_ORAM_Tree’:
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:132:34: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+         ORAM_Block* oram_block = &oram_tree->oram[i * (sizeof(ORAM_Block) / sizeof(int) + block_size)];
+                                  ^
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c: In function ‘Fetch_Blocks’:
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:250:38: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+             ORAM_Block* oram_block = &oram_tree->oram[(bucket_idx * oram_controller->bucket_size + j) * (sizeof(ORAM_Block) / sizeof(int) + oram_controller->block_size)];
+                                      ^
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c: In function ‘Store_Blocks’:
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:366:38: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+             ORAM_Block* oram_block = &oram_tree->oram[(bucket_idx * oram_controller->bucket_size + j) * (sizeof(ORAM_Block) / sizeof(int) + oram_controller->block_size)];
+                                      ^
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c: In function ‘Access_ORAM’:
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:392:22: warning: unused variable ‘oram_tree’ [-Wunused-variable]
+     ORAM_Tree*       oram_tree       = &oram->oram_tree;
+                      ^
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c: At top level:
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:13:12: warning: ‘one’ defined but not used [-Wunused-variable]
+ static int one     = 1;
+            ^
+/home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c:14:12: warning: ‘max_int’ defined but not used [-Wunused-variable]
+ static int max_int = 0xfffffff;
+            ^
+
+; Multi2Sim 5.0 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: Ji1F1
+
+
+; Multi2Sim 5.0 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: JkOho
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 4747.88 [s]
+SimEnd = ContextsFinished
+
+[ x86 ]
+RealTime = 4747.88 [s]
+Instructions = 238493272
+InstructionsPerSecond = 50232
+
+
+; Multi2Sim 5.0 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: sx0H6
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 21922.37 [s]
+SimEnd = ContextsFinished
+SimTime = 54134711.43 [ns]
+Frequency = 3000 [MHz]
+Cycles = 162566702
+
+[ x86 ]
+RealTime = 21922.34 [s]
+Instructions = 239831593
+InstructionsPerSecond = 10940
+SimTime = 54134711.77 [ns]
+Frequency = 3000 [MHz]
+Cycles = 162566702
+CyclesPerSecond = 7416
+FastForwardInstructions = 0
+CommittedInstructions = 238493059
+CommittedInstructionsPerCycle = 1.467
+CommittedMicroInstructions = 623865852
+CommittedMicroInstructionsPerCycle = 3.838
+BranchPredictionAccuracy = 0.9959
+
