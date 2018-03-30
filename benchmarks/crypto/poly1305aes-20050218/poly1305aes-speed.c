@@ -200,12 +200,12 @@ main()
     m += datagap; \
     a += datagap; \
   } \
-  //printf("%4d ",len); \
-  //printf(funsymbol); \
-  //printf(aligned ? "4444" : "0000"); \
-  //printf(cachedkeys ? "K" : "-"); \
-  //printf(cacheddata ? "D" : "-"); \
-  //for (i = 0;i < 20;++i) printf(" %5lld",t[i + 1] - t[i]); \
+  printf("%4d ",len); \
+  printf(funsymbol); \
+  printf(aligned ? "4444" : "0000"); \
+  printf(cachedkeys ? "K" : "-"); \
+  printf(cacheddata ? "D" : "-"); \
+  for (i = 0;i < 20;++i) printf(" %5lld",t[i + 1] - t[i]); \
   printf("\n"); \
   fflush(stdout);
 
@@ -222,12 +222,13 @@ main()
   DOIT6(cachedkeys,cacheddata,1) \
   DOIT6(cachedkeys,cacheddata,0)
 
-  for (len = 0;len <= 8192;++len) {
+  //for (len = 0;len <= 128;++len) {
+  //  printf("Iteration %d\n", len);
     DOIT12(1,1)
     DOIT12(0,1)
     DOIT12(1,0)
     DOIT12(0,0)
-  }
+  //}
 
   tfinish = cpucycles(); gettimeofday(&tvfinish,0);
   printf("%lld cycles\n"
