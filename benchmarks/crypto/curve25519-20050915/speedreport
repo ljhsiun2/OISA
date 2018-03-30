@@ -109,13 +109,13 @@ dev.raid.speed_limit_min = 1000
 dev.scsi.logging_level = 0
 fs.aio-max-nr = 65536
 fs.aio-nr = 0
-fs.dentry-state = 25652	10213	45	0	0	0
+fs.dentry-state = 78493	62899	45	0	0	0
 fs.dir-notify-enable = 1
 fs.epoll.max_user_watches = 819773
 fs.file-max = 398645
 fs.file-nr = 6400	0	398645
-fs.inode-nr = 24506	884
-fs.inode-state = 24506	884	0	0	0	0	0
+fs.inode-nr = 68683	866
+fs.inode-state = 68683	866	0	0	0	0	0
 fs.inotify.max_queued_events = 16384
 fs.inotify.max_user_instances = 128
 fs.inotify.max_user_watches = 8192
@@ -191,7 +191,7 @@ kernel.msgmnb = 16384
 kernel.msgmni = 32000
 kernel.ngroups_max = 65536
 kernel.nmi_watchdog = 0
-kernel.ns_last_pid = 5209
+kernel.ns_last_pid = 9567
 kernel.numa_balancing = 0
 kernel.numa_balancing_scan_delay_ms = 1000
 kernel.numa_balancing_scan_period_max_ms = 60000
@@ -218,14 +218,14 @@ kernel.printk_delay = 0
 kernel.printk_ratelimit = 5
 kernel.printk_ratelimit_burst = 10
 kernel.pty.max = 4096
-kernel.pty.nr = 25
+kernel.pty.nr = 24
 kernel.pty.reserve = 1024
 kernel.random.boot_id = 1c241ca5-cb37-478c-a380-8d3a677e2e7f
-kernel.random.entropy_avail = 801
+kernel.random.entropy_avail = 861
 kernel.random.poolsize = 4096
 kernel.random.read_wakeup_threshold = 64
 kernel.random.urandom_min_reseed_secs = 60
-kernel.random.uuid = 9b135384-a4ae-40dd-8025-ec85ba305c27
+kernel.random.uuid = 0efde455-33ee-476a-a263-49f88d6ec057
 kernel.random.write_wakeup_threshold = 896
 kernel.randomize_va_space = 2
 kernel.real-root-dev = 0
@@ -240,7 +240,7 @@ kernel.sched_domain.cpu0.domain0.forkexec_idx = 0
 kernel.sched_domain.cpu0.domain0.idle_idx = 1
 kernel.sched_domain.cpu0.domain0.imbalance_pct = 125
 kernel.sched_domain.cpu0.domain0.max_interval = 4
-kernel.sched_domain.cpu0.domain0.max_newidle_lb_cost = 63374
+kernel.sched_domain.cpu0.domain0.max_newidle_lb_cost = 57415
 kernel.sched_domain.cpu0.domain0.min_interval = 2
 kernel.sched_domain.cpu0.domain0.name = DIE
 kernel.sched_domain.cpu0.domain0.newidle_idx = 0
@@ -253,7 +253,7 @@ kernel.sched_domain.cpu1.domain0.forkexec_idx = 0
 kernel.sched_domain.cpu1.domain0.idle_idx = 1
 kernel.sched_domain.cpu1.domain0.imbalance_pct = 125
 kernel.sched_domain.cpu1.domain0.max_interval = 4
-kernel.sched_domain.cpu1.domain0.max_newidle_lb_cost = 193138
+kernel.sched_domain.cpu1.domain0.max_newidle_lb_cost = 53178
 kernel.sched_domain.cpu1.domain0.min_interval = 2
 kernel.sched_domain.cpu1.domain0.name = DIE
 kernel.sched_domain.cpu1.domain0.newidle_idx = 0
@@ -897,9 +897,10 @@ GenuineIntel-000406e3-0fabfbff
 % echo _____; ./curve25519-speed; echo _____
 _____
 curve25519_athlon cpucycles_athlon
-102720704 cycles
-39631 usecs
-2591.928137 MHz
+ 748808 433390 356572 356420 356256 356478 470460 402014 356300 356414 356300 356518 356316 519504 356622 356312 356588 356244 356558 356278
+15210022 cycles
+5862 usecs
+2594.681337 MHz
 _____
 % ./test-curve25519 | head -123456 | tail -1
 9d3dfa85e527852eff57fb0fc6b91630bc9d6df8813ddb3533202603cfad014f 3bac95275dd1778b5a281b732b0b97f272342f0935723117c82b158cf0bcb80c 8bf654e08b11bc1e52f3ff32a894f520aad71b7b710986a8bb8970389add5b5b
