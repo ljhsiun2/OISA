@@ -3,11 +3,11 @@
 # Public domain.
 CC = gcc -O3 -m32
 
-PATHS = /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/path_oram/path_oram.c /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/scan_oram/scan_oram.c\
-	 /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/lib/misc.c /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/lib/asm.c\
-	 /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/sort/merge_sort.c /home/ljhsiun2/projects/research/multi2sim/bin/benchmarks/primitives/sort/bitonic_sort.c
+PATHS = /home/ljhsiun2/OISA_SIM/primitives/path_oram/nobliv_path_oram.c /home/ljhsiun2/OISA_SIM/primitives/scan_oram/scan_oram.c\
+         /home/ljhsiun2/OISA_SIM/primitives/lib/misc.c /home/ljhsiun2/OISA_SIM/primitives/lib/asm.c\
+         /home/ljhsiun2/OISA_SIM/primitives/sort/merge_sort.c /home/ljhsiun2/OISA_SIM/primitives/sort/bitonic_sort.c
 
-EXE = curve25519aes-speed
+EXE = poly1305aes-speed
 
 # Test programs:
 
@@ -259,10 +259,10 @@ opt: curve25519-speed.o curve25519.a cpucycles.a
 	gcc -std=c99 $(EXE).c $(PATHS) poly1305aes.a poly1305aes.h poly1305.h aes.h -Wall -O3 -o $(EXE)
 
 sim: poly1305aes.a poly1305aes.h poly1305.h aes.h
-	$(CC) -o curve25519-speed poly1305aes.a poly1305aes.h poly1305.h aes.h
+	$(CC) -o poly1305aes-speed poly1305aes.a poly1305aes.h poly1305.h aes.h
 
-sim_opt: poly1305aes.a poly1305aes.h poly1305.h aes.h
-	gcc -std=c99 $(PATHS) poly1305aes.a poly1305aes.h poly1305.h aes.h -Wall -D M2S -m32 -O3 -o $(EXE)
+sim_opt: poly1305aes-speed.o poly1305aes.a cpucycles.a
+	gcc -std=c99 $(PATHS) poly1305aes-speed.o poly1305aes.a cpucycles.a -Wall -D M2S -m32 -O3 -o $(EXE)
 
 all_static: poly1305aes.a poly1305aes.h poly1305.h aes.h
 	gcc -std=c99 $(EXE).c $(PATHS) poly1305aes.a poly1305aes.h poly1305.h aes.h -Wall -static -o $(EXE)

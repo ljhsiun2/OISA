@@ -8,7 +8,7 @@ from collections import deque
 from datetime import datetime
 
 
-MULTI2SIM_PATH = "/home/ljhsiun2/projects/research/multi2sim/bin/m2s"
+MULTI2SIM_PATH = "/home/ljhsiun2/OISA/multi2sim/bin/m2s"
 CUR_DIR = os.getcwd() + "/"
 
 EXECUTABLE_NAME = "poly1305aes-speed"
